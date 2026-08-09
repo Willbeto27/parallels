@@ -59,7 +59,6 @@
 .pw a.btn.ghost{color:var(--blue)}
 .pw a.btn.quiet{color:var(--mute)}
 .pw a.cta{color:#12161C}
-.pw a.vdeep{color:var(--blue)}
 .btn.store{font-size:17px;padding:13px 20px;gap:10px}
 .btn.quiet{background:transparent;color:var(--mute);border:1px solid var(--line);font-size:14px;padding:8px 13px;font-weight:700}
 .btn.quiet:hover{background:#fff;color:var(--blue);border-color:var(--blue)}
@@ -108,7 +107,7 @@
 .vbrowse button:hover{border-color:var(--blue);background:var(--blue-l)}
 .vbrowse button[aria-current="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
 .vframe{position:relative;padding-top:56.25%;background:#000;border-radius:10px;overflow:hidden}
-.vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vframe video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
 .vchaps{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 0}
 .vbrowse{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .vchaps .vlbl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
@@ -118,10 +117,12 @@
 .vchaps button.vdim{color:var(--mute);border-style:dashed}
 .vchaps button.vdim i{font-style:normal;font-weight:650}
 .vnote{margin:10px 0 0;font-size:14px;color:var(--mute)}
+.vseek{margin:12px 0 0;font-size:14px}
 .vfall{margin:10px 0 0;font-size:13px}
 .vfall a{color:var(--mute)}
-.vdeep{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:14px;font-weight:700;
-  color:var(--blue);text-decoration:none;border-bottom:1px solid transparent}
+.vdeep{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:14px;
+  font-weight:700;color:var(--blue);background:transparent;border:0;padding:0;cursor:pointer;
+  border-bottom:1px solid transparent}
 .vdeep:hover{border-bottom-color:var(--blue)}
 
 /* ---------- cards / hero ---------- */
@@ -150,6 +151,7 @@
 .pw figure img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
 .pw figcaption{font-size:14px;color:var(--mute);margin-top:7px}
 .pw figcaption i{font-style:italic;opacity:.8}
+.pw p > .vdeep{margin-top:2px}
 .pw figure img{cursor:zoom-in}
 .lb{display:none;position:fixed;inset:0;z-index:200;background:rgba(4,10,20,.88);
   align-items:center;justify-content:center;padding:28px}
@@ -170,8 +172,8 @@
 .step .num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;
   font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .step.done .num{background:var(--green)}
-.step .txt{flex:1 1 200px;min-width:0}
-.step .txt .ttl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:1px}
+.step .txt{flex:1 1 200px;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.step .txt .ttl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .step .txt b{font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.25}
 .step .txt > span{font-size:15px;color:var(--mute)}
 .step .ic{flex:none;color:var(--blue)}
@@ -294,9 +296,9 @@ var FOCUS_OPTIONS   = "chrome-extension://bbdfdgdeodcghakchkaboabifekimnld/optio
    Deux vidéos non répertoriées sur YouTube, une par navigateur.
    ch = seconde de départ de chaque chapitre. */
 var VIDEOS = {
-  chrome:{ label:"Google Chrome", id:"I-JoigDX6ls",
+  chrome:{ label:"Google Chrome", src:"assets/parallels_chrome.mp4",
     ch:{ open:0, pwa:20, print:57, auto:94, example:110 } },
-  edge:{ label:"Microsoft Edge", id:"5xLgt29irxA",
+  edge:{ label:"Microsoft Edge", src:"assets/parallels_edge.mp4",
     ch:{ open:0, pwa:17, print:62, auto:98, example:110 } }
 };
 var CH_ORDER = ["open","pwa","print","auto","example"];
@@ -305,23 +307,23 @@ var VT = {
   fr:{ open:"Ouvrir Parallels", pwa:"Installer en tant qu'application", print:"Impression",
        auto:"Connexion automatique (Sign & Go)", example:"Exemple",
        title:"Tutoriel vidéo", lead:"La vidéo complète, chapitre par chapitre.",
-       browser:"Votre navigateur", chapters:"Chapitres", noPrint:"Le chapitre « Impression » ne concerne pas votre centre : votre imprimante est déjà configurée.", notFor:"sans objet ici", watch:"Voir la vidéo", close:"Fermer",
-       deep:"Voir cette étape en vidéo", yt:"Ouvrir sur YouTube" },
+       browser:"Votre navigateur", chapters:"Chapitres", noSeek:"Ce lecteur ne peut pas se déplacer dans la vidéo ici. Lancez la lecture et avancez jusqu'à", noPrint:"Le chapitre « Impression » ne concerne pas votre centre : votre imprimante est déjà configurée.", notFor:"sans objet ici", watch:"Voir la vidéo", close:"Fermer",
+       deep:"Voir cette étape en vidéo" },
   de:{ open:"Parallels öffnen", pwa:"Als Anwendung installieren", print:"Drucken",
        auto:"Automatische Anmeldung (Sign & Go)", example:"Beispiel",
        title:"Video-Tutorial", lead:"Das komplette Video, Kapitel für Kapitel.",
-       browser:"Ihr Browser", chapters:"Kapitel", noPrint:"Das Kapitel « Drucken » betrifft Ihr Center nicht: Ihr Drucker ist bereits eingerichtet.", notFor:"hier nicht relevant", watch:"Video ansehen", close:"Schließen",
-       deep:"Diesen Schritt im Video ansehen", yt:"Auf YouTube öffnen" },
+       browser:"Ihr Browser", chapters:"Kapitel", noSeek:"Dieser Player kann hier nicht im Video springen. Starten Sie die Wiedergabe und spulen Sie vor bis", noPrint:"Das Kapitel « Drucken » betrifft Ihr Center nicht: Ihr Drucker ist bereits eingerichtet.", notFor:"hier nicht relevant", watch:"Video ansehen", close:"Schließen",
+       deep:"Diesen Schritt im Video ansehen" },
   nl:{ open:"Parallels openen", pwa:"Installeren als toepassing", print:"Afdrukken",
        auto:"Automatisch inloggen (Sign & Go)", example:"Voorbeeld",
        title:"Videohandleiding", lead:"De volledige video, kapittel per kapittel.",
-       browser:"Uw browser", chapters:"Kapittels", noPrint:"Het kapittel « Afdrukken » geldt niet voor uw vestiging: uw printer is al ingesteld.", notFor:"hier niet van toepassing", watch:"Video bekijken", close:"Sluiten",
-       deep:"Deze stap in de video bekijken", yt:"Openen op YouTube" },
+       browser:"Uw browser", chapters:"Kapittels", noSeek:"Deze speler kan hier niet in de video springen. Start de video en spoel door naar", noPrint:"Het kapittel « Afdrukken » geldt niet voor uw vestiging: uw printer is al ingesteld.", notFor:"hier niet van toepassing", watch:"Video bekijken", close:"Sluiten",
+       deep:"Deze stap in de video bekijken" },
   en:{ open:"Open Parallels", pwa:"Install as an application", print:"Printing",
        auto:"Auto-Login (Sign & Go)", example:"Example",
        title:"Video tutorial", lead:"The full video, chapter by chapter.",
-       browser:"Your browser", chapters:"Chapters", noPrint:"The « Printing » chapter does not apply to your centre: your printer is already set up.", notFor:"not needed here", watch:"Watch the video", close:"Close",
-       deep:"Watch this step in the video", yt:"Open on YouTube" }
+       browser:"Your browser", chapters:"Chapters", noSeek:"This player cannot seek within the video here. Start playback and skip forward to", noPrint:"The « Printing » chapter does not apply to your centre: your printer is already set up.", notFor:"not needed here", watch:"Watch the video", close:"Close",
+       deep:"Watch this step in the video" }
 };
 
 /* 3. TEXTES -------------------------------------------------- */
@@ -801,11 +803,7 @@ function detectBrowser(){
   var ua = navigator.userAgent || "";
   return /Edg\//.test(ua) ? "edge" : "chrome";
 }
-function vsrc(sec, autoplay){
-  return "https://www.youtube-nocookie.com/embed/"+VIDEOS[vBrowser].id+
-    "?start="+sec+"&rel=0"+(autoplay?"&autoplay=1":"");
-}
-function ytUrl(sec){ return "https://youtu.be/"+VIDEOS[vBrowser].id+"?t="+sec; }
+function vsrc(){ return VIDEOS[vBrowser].src; }
 function videoBlock(){
   var v = VT[lang] || VT.fr;
   if(!vBrowser) vBrowser = detectBrowser();
@@ -824,9 +822,8 @@ function videoPanel(){
       VIDEOS[k].label+'</button>';
   });
   h += '</div>'+
-    '<div class="vframe"><iframe id="vplayer" src="'+vsrc(0,0)+'" title="'+v.title+'" '+
-    'allow="accelerometer; autoplay; encrypted-media; picture-in-picture" '+
-    'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>'+
+    '<div class="vframe"><video id="vplayer" src="'+vsrc()+'" title="'+v.title+'" '+
+    'controls preload="metadata" playsinline></video></div>'+
     '<div class="vchaps"><span class="vlbl">'+v.chapters+'</span>';
   CH_ORDER.forEach(function(k){
     var s = VIDEOS[vBrowser].ch[k];
@@ -836,7 +833,7 @@ function videoPanel(){
   });
   h += '</div>';
   if(profile === "int") h += '<p class="vnote">'+v.noPrint+'</p>';
-  return h+'<p class="vfall"><a href="'+ytUrl(0)+'" target="_blank" rel="noopener">'+v.yt+'</a></p>';
+  return h;
 }
 function openVideo(){
   var el = document.getElementById('video');
@@ -865,9 +862,7 @@ function setBrowser(k){
   var v = VT[lang] || VT.fr;
   var links = document.querySelectorAll('.vdeep');
   for(var i=0;i<links.length;i++){
-    var ch = links[i].getAttribute('data-ch');
-    var sec = VIDEOS[vBrowser].ch[ch];
-    links[i].setAttribute('href', ytUrl(sec));
+    var sec = VIDEOS[vBrowser].ch[links[i].getAttribute('data-ch')];
     var lbl = links[i].querySelector('.vd');
     if(lbl) lbl.textContent = v.deep+' · '+fmt(sec);
   }
@@ -875,26 +870,42 @@ function setBrowser(k){
 function goChapter(sec){
   openVideo();
   var f = document.getElementById('vplayer');
-  if(f) f.src = vsrc(sec, 1);
+  if(f){
+    var seek = function(){
+      /* Le déplacement exige un hébergement qui répond aux requêtes partielles
+         (GitHub Pages le fait). Sinon on l'indique au lieu de relire depuis 0. */
+      var ok = f.seekable && f.seekable.length && f.seekable.end(0) > 0;
+      if(!ok){ warnNoSeek(sec); return; }
+      try{ f.currentTime = sec; f.play(); }catch(e){ warnNoSeek(sec); }
+    };
+    if(f.readyState >= 1) seek();
+    else f.addEventListener('loadedmetadata', seek, {once:true});
+  }
   var b = document.getElementById('video');
   if(b) window.scrollTo({top:b.getBoundingClientRect().top+window.pageYOffset-60,behavior:'smooth'});
+}
+function warnNoSeek(sec){
+  var v = VT[lang] || VT.fr;
+  var host = document.getElementById('vproc');
+  if(!host) return;
+  var n = host.querySelector('.vseek');
+  if(!n){
+    n = document.createElement('p');
+    n.className = 'note warn vseek';
+    host.appendChild(n);
+  }
+  n.innerHTML = v.noSeek+' <b>'+fmt(sec)+'</b>.';
 }
 /* lien discret vers un chapitre, depuis une étape ou une FAQ */
 function vlink(ch){
   var v = VT[lang] || VT.fr;
   if(!vBrowser) vBrowser = detectBrowser();
   var sec = VIDEOS[vBrowser].ch[ch];
-  return '<a class="vdeep" data-ch="'+ch+'" href="'+ytUrl(sec)+'" target="_blank" rel="noopener" '+
-    'onclick="return vJump(event,this)">'+ico('play',15)+
-    '<span class="vd">'+v.deep+' · '+fmt(sec)+'</span></a>';
+  return '<button class="vdeep" type="button" data-ch="'+ch+'" onclick="vJump(this)">'+
+    ico('play',15)+'<span class="vd">'+v.deep+' · '+fmt(sec)+'</span></button>';
 }
-function vJump(e, a){
-  /* ancrage sur le lecteur en haut ; si l'iframe n'a pas chargé, on laisse
-     le lien externe YouTube faire son travail (comportement de repli) */
-  if(!document.getElementById('video')) return true;
-  e.preventDefault();
+function vJump(a){
   goChapter(VIDEOS[vBrowser].ch[a.getAttribute('data-ch')]);
-  return false;
 }
 
 /* --- écrans --- */
