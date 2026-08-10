@@ -45,6 +45,8 @@
 .cta:active{transform:translateY(2px);box-shadow:0 1px 0 var(--yellow-d)}
 .cta.sm{font-size:16px;padding:11px 18px;gap:8px}
 .step .go .cta{white-space:nowrap}
+.step .skip{font-size:14px;font-weight:700;color:var(--blue);background:var(--blue-l);
+  border-radius:7px;padding:6px 11px;margin-top:2px}
 .pw .homesub{font-size:15px;font-weight:650;color:var(--mute);margin:0 0 6px}
 .pw h1 i.sub{font-style:normal;font-weight:650;font-size:.5em;letter-spacing:0;color:var(--mute);white-space:nowrap}
 .pw .portal{font-size:15px;color:var(--mute);margin:0 0 14px}
@@ -86,7 +88,7 @@
 
 /* ---------- profile picks ---------- */
 .choices{display:grid;gap:14px;margin:0 0 16px}
-@media(min-width:660px){.choices{grid-template-columns:1fr 1fr}}
+@media(min-width:660px){.choices{grid-template-columns:repeat(3,1fr)}}
 .pick{font:inherit;text-align:left;cursor:pointer;background:var(--card);border:2px solid var(--line);
   border-radius:14px;padding:20px 20px;display:flex;flex-direction:column;gap:8px;width:100%;
   transition:border-color .12s,transform .12s,box-shadow .12s}
@@ -140,10 +142,22 @@
 .addr code{font-family:ui-monospace,Consolas,monospace;font-size:18px;font-weight:700;color:var(--blue);
   word-break:break-all;flex:1 1 240px;line-height:1.3}
 
+.envs{display:grid;gap:12px}
+@media(min-width:660px){.envs{grid-template-columns:1fr 1fr}}
+.env{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+  display:flex;flex-direction:column;gap:8px}
+.env b{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.env p{margin:0;font-size:15px;color:var(--mute)}
+.env .row{margin-top:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.env code{font-family:ui-monospace,Consolas,monospace;font-size:16px;font-weight:700;color:var(--blue);
+  word-break:break-all;flex:1 1 180px;line-height:1.3}
+
 /* ---------- notes ---------- */
 .note{border-left:6px solid var(--line);background:#fff;padding:13px 17px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15.5px}
 .note.ok{border-color:var(--green);background:var(--green-l)}
 .note.warn{border-color:#D9820A;background:#FFF8EC}
+.note.wico p{display:flex;gap:12px;align-items:flex-start}
+.note.wico .ic{color:#D9820A;margin-top:1px}
 .note p:last-child{margin:0}
 
 /* ---------- images & placeholders ---------- */
@@ -205,6 +219,10 @@
 .pw .body{padding:2px 18px 18px}
 
 /* ---------- copy field ---------- */
+.copybox{background:var(--blue-l);border-radius:10px;padding:12px 14px;margin:10px 0 12px}
+.copybox .lbl{margin:0 0 6px;font-size:13px;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--blue)}
+.copybox .copy{margin:0}
 .copy{display:flex;gap:10px;align-items:stretch;margin:10px 0 12px;flex-wrap:wrap}
 .copy input{flex:1 1 280px;font-family:ui-monospace,Consolas,monospace;font-size:13px;
   padding:11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
@@ -265,6 +283,10 @@ var IMG = {
   autologin : "assets/40-autologin-add-to-chrome.png",
   autologinLook: "assets/auto_login.png", // aperçu de l'extension AutoLogin
   focusStore: "assets/50-focusimpression-store.png",
+  printWin  : "assets/60-impression-fenetre-focus.png", // fenêtre d'impression de Focus
+  taskbarBo : "assets/02-icone-barre-taches-backoffice.png", // icône dans la barre des tâches, back office
+  iconBo    : "assets/02b-icone-backoffice-zoom.png",        // la même icône, agrandie
+
   focusStoreBtn: ""  // libre : autre capture du Chrome Web Store si besoin
 };
 
@@ -272,7 +294,7 @@ var IMG = {
    Le fichier de base est le français ; les variantes portent le suffixe
    de la langue : 33-....png / 33-....de.png / 33-....nl.png / 33-....en.png
    Si vous passez à des URLs publiques, gardez ce même suffixe avant ".png". */
-var LOCALIZED = ["10-zoom-pwa-bouton-reglage.png","10.2-zoom-pwa-bouton-reglage.png","32-pwa-menu-installer-appli.png","33-pwa-confirmer-installation.png","34-pwa-epingler-barre-taches.png","40-autologin-add-to-chrome.png","30-pwa-avant-dans-chrome.png","31-pwa-apres-en-pwa.png","20-copiercoller-popup-allow.png","21-copiercoller-reactiver-clipboard.png"];
+var LOCALIZED = ["10-zoom-pwa-bouton-reglage.png","10.2-zoom-pwa-bouton-reglage.png","32-pwa-menu-installer-appli.png","33-pwa-confirmer-installation.png","34-pwa-epingler-barre-taches.png","40-autologin-add-to-chrome.png","30-pwa-avant-dans-chrome.png","31-pwa-apres-en-pwa.png","20-copiercoller-popup-allow.png","21-copiercoller-reactiver-clipboard.png","60-impression-fenetre-focus.png","02-icone-barre-taches-backoffice.png"];
 function loc(src){
   if(!src || !lang || lang==="fr") return src;
   for(var i=0;i<LOCALIZED.length;i++){
@@ -306,23 +328,23 @@ var CH_ORDER = ["open","pwa","print","auto","example"];
 var VT = {
   fr:{ open:"Ouvrir Parallels", pwa:"Installer en tant qu'application", print:"Impression",
        auto:"Connexion automatique (Sign & Go)", example:"Exemple",
-       title:"Tutoriel vidéo", lead:"La vidéo complète, chapitre par chapitre.",
-       browser:"Votre navigateur", chapters:"Chapitres", noSeek:"Ce lecteur ne peut pas se déplacer dans la vidéo ici. Lancez la lecture et avancez jusqu'à", noPrint:"Le chapitre « Impression » ne concerne pas votre centre : votre imprimante est déjà configurée.", notFor:"sans objet ici", watch:"Voir la vidéo", close:"Fermer",
+       title:"Tutoriel vidéo", lead:"La vidéo complète, chapitre par chapitre.", leadEx:"Un exemple d'utilisation en vidéo.",
+       browser:"Votre navigateur", chapters:"Chapitres", noSeek:"Ce lecteur ne peut pas se déplacer dans la vidéo ici. Lancez la lecture et avancez jusqu'à", noPrint:"Le chapitre « Impression » ne vous concerne pas : votre imprimante est déjà configurée.", notFor:"sans objet ici", watch:"Voir la vidéo", close:"Fermer",
        deep:"Voir cette étape en vidéo" },
   de:{ open:"Parallels öffnen", pwa:"Als Anwendung installieren", print:"Drucken",
        auto:"Automatische Anmeldung (Sign & Go)", example:"Beispiel",
-       title:"Video-Tutorial", lead:"Das komplette Video, Kapitel für Kapitel.",
-       browser:"Ihr Browser", chapters:"Kapitel", noSeek:"Dieser Player kann hier nicht im Video springen. Starten Sie die Wiedergabe und spulen Sie vor bis", noPrint:"Das Kapitel « Drucken » betrifft Ihr Center nicht: Ihr Drucker ist bereits eingerichtet.", notFor:"hier nicht relevant", watch:"Video ansehen", close:"Schließen",
+       title:"Video-Tutorial", lead:"Das komplette Video, Kapitel für Kapitel.", leadEx:"Ein Anwendungsbeispiel im Video.",
+       browser:"Ihr Browser", chapters:"Kapitel", noSeek:"Dieser Player kann hier nicht im Video springen. Starten Sie die Wiedergabe und spulen Sie vor bis", noPrint:"Das Kapitel « Drucken » betrifft Sie nicht: Ihr Drucker ist bereits eingerichtet.", notFor:"hier nicht relevant", watch:"Video ansehen", close:"Schließen",
        deep:"Diesen Schritt im Video ansehen" },
   nl:{ open:"Parallels openen", pwa:"Installeren als toepassing", print:"Afdrukken",
        auto:"Automatisch inloggen (Sign & Go)", example:"Voorbeeld",
-       title:"Videohandleiding", lead:"De volledige video, kapittel per kapittel.",
-       browser:"Uw browser", chapters:"Kapittels", noSeek:"Deze speler kan hier niet in de video springen. Start de video en spoel door naar", noPrint:"Het kapittel « Afdrukken » geldt niet voor uw vestiging: uw printer is al ingesteld.", notFor:"hier niet van toepassing", watch:"Video bekijken", close:"Sluiten",
+       title:"Videohandleiding", lead:"De volledige video, kapittel per kapittel.", leadEx:"Een voorbeeld van gebruik in video.",
+       browser:"Uw browser", chapters:"Kapittels", noSeek:"Deze speler kan hier niet in de video springen. Start de video en spoel door naar", noPrint:"Het kapittel « Afdrukken » geldt niet voor u: uw printer is al ingesteld.", notFor:"hier niet van toepassing", watch:"Video bekijken", close:"Sluiten",
        deep:"Deze stap in de video bekijken" },
   en:{ open:"Open Parallels", pwa:"Install as an application", print:"Printing",
        auto:"Auto-Login (Sign & Go)", example:"Example",
-       title:"Video tutorial", lead:"The full video, chapter by chapter.",
-       browser:"Your browser", chapters:"Chapters", noSeek:"This player cannot seek within the video here. Start playback and skip forward to", noPrint:"The « Printing » chapter does not apply to your centre: your printer is already set up.", notFor:"not needed here", watch:"Watch the video", close:"Close",
+       title:"Video tutorial", lead:"The full video, chapter by chapter.", leadEx:"An example of use, in video.",
+       browser:"Your browser", chapters:"Chapters", noSeek:"This player cannot seek within the video here. Start playback and skip forward to", noPrint:"The « Printing » chapter does not apply to you: your printer is already set up.", notFor:"not needed here", watch:"Watch the video", close:"Close",
        deep:"Watch this step in the video" }
 };
 
@@ -332,36 +354,41 @@ var T = {
   name:"Français", region:"France · Suisse (FR)",
   h1:"Accéder à Parallels", lead:"Choisissez votre situation.",
   ctx:"Parallels remplace Citrix. Seul le portail d'accès change : vos applications fonctionnent exactement comme avant.",
-  pickInt:"Je suis en centre intégré ou back office", pickIntSub:"L'icône est déjà sur votre poste",
+  pickInt:"Je suis en centre intégré", pickIntSub:"L'icône est déjà sur votre poste",
+  pickBo:"Je suis au back office", pickBoSub:"Accès production et environnements de test",
   pickExt:"Je suis en centre franchisé", pickExtSub:"Vous vous connectez par une adresse web",
   choose:"Choisir",
   dunno:"Je ne sais pas dans quel cas je suis",
   dunnoBody:["Regardez votre barre des tâches, en bas de l'écran.",
-   "Vous y voyez l'icône Parallels ? Vous êtes en centre intégré ou en back office.",
+   "Vous y voyez l'icône Parallels ? Vous êtes en centre intégré ou au back office.",
    "Vous ne la voyez pas ? Vous êtes très probablement en centre franchisé.",
+   "Vous travaillez en atelier, sur un centre : choisissez <b>centre intégré</b>. Vous travaillez au siège ou dans une équipe support, avec accès aux environnements de test : choisissez <b>back office</b>.",
    "Toujours un doute ? Essayez l'adresse <b>myapps.erm.org/fr</b> dans Chrome. Si elle ne s'ouvre pas, vous êtes en centre franchisé."],
   back:"← Changer de situation",
   intH1:"Cliquez sur l'icône Parallels",
   intLead:"L'icône est déjà dans votre barre des tâches, en bas de l'écran. Un clic, et Parallels s'ouvre. C'est tout.",
   intIconCaption:"Voici à quoi ressemble l'icône à repérer :",
   intOk:"<b>Rien à installer.</b> Votre poste est déjà configuré, sur PC comme sur Chromebox.",
+  intOkBo:"<b>L'accès est déjà configuré sur votre poste.</b> L'extension AutoLogin, elle, est à installer si vous en avez besoin.",
   intNoIcon:"Pas d'icône ?", intNoIconP:"Ouvrez Chrome et allez à cette adresse :",
   intSame:"L'icône et l'adresse mènent exactement au même endroit.",
+  envH:"Production et non-production", envProd:"Production", envProdP:"L'environnement de travail quotidien. C'est celui qui s'ouvre avec l'icône de votre barre des tâches.",
+  envNp:"Non-production", envNpP:"Tous les environnements de test réunis : développement, intégration, préproduction, QAS. Réservé au back office et aux équipes projet.", envNpHow:"L'adresse est la même, avec <b>.int</b> ajouté après <b>myapps</b>.",
   extH1:"Ouvrir Parallels", extLead:"Votre accès se fait par cette adresse. Mettez-la en favori, ou installez Parallels comme une application.",
   guideTitle:"Avant de commencer", guideBtn:"Voir comment faire", guideClose:"Fermer",
   g1t:"Ouvrez Parallels", g1s:"Avec le bouton jaune.",
-  g2t:"L'affichage est trop petit ?", g2s:"Installez Parallels comme une application.",
+  g2t:"L'affichage est trop petit ?", g2s:"Installez Parallels comme une application.", g2skip:"Si l'affichage vous convient déjà, passez cette étape. Vous pourrez la faire à tout moment.", oneTray:"<b>Imprimante à un seul bac ?</b> N'installez pas cette extension. Elle est prévue pour les imprimantes professionnelles à plusieurs bacs. L'impression fonctionne très bien sans elle si vous n'avez qu'un bac.",
   g3t:"Installez Focus Impression", g3s:"Pour imprimer directement sur l'imprimante de l'atelier.",
-  g4t:"Installez AutoLogin", g4s:"Pour ne plus saisir vos identifiants à chaque connexion.",
+  g4t:"Installez AutoLogin", g4s:"Pour ne plus saisir vos identifiants à chaque ouverture de Focus.",
   optional:"Facultatif",
   open:"Ouvrir Parallels", openSub:"(remplaçant de Citrix)", portal:"C'est le nouveau portail par lequel vous ouvrez vos applications, comme Focus.", faq:"Questions fréquentes",
   addrLbl:"Adresse à ouvrir dans Chrome",
   printBtn:"Imprimer cette fiche", printedOn:"Imprimé le",
-  printBlocked:"Les fenêtres pop-up sont bloquées par votre navigateur. Ouvrez la fiche dans un nouvel onglet, puis imprimez-la depuis cet onglet.", printOpen:"Ouvrir la fiche à imprimer",
+  printBlocked:"Votre navigateur a empêché l'ouverture de la fiche. Cliquez sur le bouton ci-dessous pour l'ouvrir, puis imprimez-la.", printOpen:"Ouvrir la fiche à imprimer",
   imgSoon:"Capture d'écran à venir",
   helpTxt:"Ça ne fonctionne pas ? Contactez votre référent informatique habituel.",
   foot:"Euromaster · Parallels remplace Citrix · Un problème ? Contactez votre référent informatique habituel.",
-  storeBtn:"Ouvrir dans le Chrome Web Store", copy:"Copier", copied:"Copié",
+  storeBtn:"Ouvrir la page de l'extension", copy:"Copier", copied:"Copié", copyManual:"Appuyez sur Ctrl + C", copyFail:"Copie impossible : sélectionnez l'adresse à la main",
 
   qZoom:"Comment agrandir ou réduire l'affichage ?",
   zoomP1:"Le zoom de Parallels fonctionne comme celui de votre navigateur.",
@@ -373,20 +400,19 @@ var T = {
   qAutoUse:"À quoi sert l'extension AutoLogin ?",
   autoUse1:"AutoLogin remplit automatiquement vos identifiants sur la page de connexion Focus. Vous n'avez plus à les saisir à chaque ouverture. Elle remplace Sign &amp; Go.",
   autoUse2:"Elle est déjà installée sur votre poste. Lors de votre première connexion, cliquez sur le bouton <b>+</b> pour ajouter vos différents comptes.",
+  autoUse2Bo:"Elle n'est pas installée par défaut sur votre poste : la procédure d'installation se trouve juste en dessous. Lors de votre première connexion, cliquez sur le bouton <b>+</b> pour ajouter vos différents comptes.",
 
   qClipInt:"Puis-je copier-coller entre Parallels et mes autres applications ?",
-  clipInt:"Oui. L'autorisation est déjà active sur les postes des centres intégrés et sur les Chromebox. Vous n'avez aucun réglage à faire.",
+  clipInt:"Oui. L'autorisation est déjà active sur votre poste, PC comme Chromebox. Vous n'avez aucun réglage à faire.",
 
   qPwa:"Installer Parallels comme une application (5 minutes)",
-  pwaPre:"Prérequis : PC Windows, avec Google Chrome ou Microsoft Edge.",
-  pwaEdgeStep:"Cliquez sur les 3 petits points <kbd>⋮</kbd> en haut à droite d'Edge, puis sur <b>Outils supplémentaires</b>, puis sur <b>Applications</b>, puis sur <b>Installer ce site en tant qu'application</b>.", pwaShowFor:"Voir la procédure pour", pwaPre2:"Prérequis : PC Windows.", pwaDetected:"Nous avons détecté :", pwaFor:"Procédure pour :",
-  pwaEdge:"<b>Vous utilisez Edge ?</b> Cliquez sur les 3 petits points <kbd>⋮</kbd> en haut à droite, puis sur <b>Outils supplémentaires</b>, puis sur <b>Applications</b>, puis sur <b>Installer ce site en tant qu'application</b>.",
-  pwaWhy:"Vous y gagnez : plus de barre d'adresse ni d'onglets, un accès direct depuis la barre des tâches, un écran plus dégagé.",
+  pwaEdgeStep:"Cliquez sur les 3 petits points <kbd>⋮</kbd> en haut à droite d'Edge, puis sur <b>Outils supplémentaires</b>, puis sur <b>Applications</b>, puis sur <b>Installer ce site en tant qu'application</b>.",
+  pwaWhy:"Ce que vous gagnez à l'installer en tant qu'application : plus de barre d'adresse ni d'onglets, un accès direct depuis la barre des tâches, un écran plus dégagé.",
   pwaBeforeCap:"Avant, dans le navigateur", pwaAfterCap:"Après, en application",
-  pwaS1:"Ouvrez Parallels avec le bouton en haut de cette page.",
+  pwaS1:"Ouvrez Parallels avec le bouton jaune de l'étape 1.",
   pwaS2:"Cliquez sur les 3 points <kbd>⋮</kbd> en haut à droite de Chrome, puis sur <b>Caster, enregistrer et partager</b>, puis sur <b>Installer la page en tant qu'appli…</b>",
   pwaS3:"Une fenêtre s'ouvre. Cliquez sur <b>Installer</b>.",
-  pwaS4:"Repérez l'icône Parallels dans votre barre des tâches, faites un clic droit dessus, puis cliquez sur <b>Épingler à la barre des tâches</b>.",
+  pwaS4:"Repérez l'icône Parallels dans votre barre des tâches (la barre tout en bas de l'écran, où se trouve l'heure), faites un <b>clic droit</b> dessus, puis cliquez sur <b>Épingler à la barre des tâches</b>.",
   pwaOk:"<b>C'est terminé.</b> Parallels s'ouvre maintenant en un clic depuis votre barre des tâches.",
 
   qClip:"Autoriser le copier-coller (moins d'une minute)",
@@ -394,24 +420,26 @@ var T = {
   clip2:"<b>À la première utilisation.</b> Une fenêtre apparaît en haut de l'écran. Cliquez sur <b>Allow</b> (Autoriser).",
   clipWarn:"Ne cliquez pas sur <b>Block</b>. Si c'est arrivé, ou si la fenêtre a disparu avant que vous ayez cliqué, suivez les trois étapes ci-dessous.",
   clip3:"<b>Réactiver l'autorisation.</b>",
-  clipS1:"Cliquez sur le bouton de paramètres du site, juste à gauche de l'adresse dans Chrome.",
+  clipS1:"Cliquez sur le petit bouton situé juste à gauche de l'adresse, en haut de Chrome.",
   clipS2:"Activez l'autorisation <b>Clipboard</b> (Presse-papiers) en faisant glisser le bouton vers la droite.",
   clipS3:"Rechargez la page Parallels.",
 
   qAutoInst:"Installer l'extension AutoLogin (connexion automatique)",
   autoI0:"AutoLogin remplit automatiquement vos identifiants sur la page de connexion Focus. Elle remplace Sign &amp; Go. Recommandée, mais facultative.",
-  autoI1:"Ouvrez la page de l'extension dans le Chrome Web Store.",
+  autoI1:"Ouvrez la page de l'extension avec le bouton ci-dessous.",
   autoI2:"Cliquez sur <b>Add to Chrome</b>, puis confirmez.",
-  autoI3:"Rafraîchissez ou relancez Parallels.",
+  autoI3:"Fermez Parallels, puis rouvrez-le.",
 
   qFocus:"Installer Focus Impression et configurer votre imprimante",
+  qPrint:"Comment imprimer un document ?", prIntro:"Dans Focus, la fenêtre d'impression fonctionne toujours de la même façon.", prS1:"Dans <b>Imprimante</b>, choisissez <b>2X Universal Printer</b>.", prS2:"Dans <b>Bac imprimante</b>, choisissez le bac correspondant à ce que vous imprimez : papier, étiquettes, conditions générales…", prS3:"Cliquez sur <b>Imprimer</b>.",
+  prWith:"Avec l'extension Focus Impression", prWithP:"Le document sort directement sur le bon bac de l'imprimante de l'atelier. Rien d'autre à faire.", prNo:"Sans l'extension", prNoP:"Vous pouvez imprimer quand même. Choisissez la même imprimante <b>2X Universal Printer</b> : la fenêtre d'impression de Chrome s'ouvre. Choisissez alors l'imprimante de votre atelier, puis cliquez sur <b>Imprimer</b>.", prTip:"L'extension évite cette étape supplémentaire à chaque impression.",
   foc0:"Cette extension envoie vos impressions Focus directement sur la bonne imprimante, sans passer par la fenêtre d'impression de Chrome.",
-  focS1:"Ouvrez la page de l'extension dans le Chrome Web Store.",
+  focS1:"Ouvrez la page de l'extension avec le bouton ci-dessous.",
   focS2:"Cliquez sur <b>Add to Chrome</b>, puis confirmez.",
-  focS3:"Ouvrez la page de configuration. Cette adresse n'est pas cliquable : copiez-la, puis collez-la dans la barre d'adresse de Chrome.",
+  focS3:"Copiez l'adresse ci-dessous avec le bouton <b>Copier</b>, collez-la dans la barre d'adresse de Chrome et appuyez sur Entrée : la page de configuration de l'impression s'ouvre.", addrCopyLbl:"Adresse à copier",
   focS4:"L'extension recherche les imprimantes de l'atelier. Comptez une trentaine de secondes, et <b>laissez la page ouverte</b> pendant la recherche.",
-  focIpNote:"Si l'imprimante n'apparaît pas automatiquement, vous pouvez saisir son adresse IP à la main — l'extension propose des aides intégrées pour vous guider.",
-  focS5:"Votre imprimante apparaît avec son adresse et ses bacs. Vous pouvez renommer les bacs avec <b>Modifier les noms</b> pour vous y retrouver plus facilement.",
+  focIpNote:"Si l'imprimante n'apparaît pas toute seule, l'extension vous explique pas à pas comment l'ajouter à la main.",
+  focS5:"Votre imprimante apparaît avec son adresse et ses bacs. Facultatif : vous pouvez renommer les bacs avec <b>Modifier les noms</b> pour vous y retrouver plus facilement. Rien ne vous y oblige.",
   focOk:"<b>C'est terminé.</b> Vos impressions depuis Focus partent maintenant directement sur l'imprimante. Ces réglages vous suivent quand vous changez de PC : à faire une seule fois."
  },
 
@@ -419,36 +447,41 @@ var T = {
   name:"Deutsch", region:"Deutschland · Österreich · Schweiz (DE)",
   h1:"Zugang zu Parallels", lead:"Wählen Sie Ihre Situation.",
   ctx:"Parallels ersetzt Citrix. Nur das Zugangsportal ändert sich: Ihre Anwendungen funktionieren genau wie bisher.",
-  pickInt:"Ich bin in einem eigenen Center oder im Backoffice", pickIntSub:"Das Symbol ist schon auf Ihrem Rechner",
+  pickInt:"Ich bin in einem eigenen Center", pickIntSub:"Das Symbol ist schon auf Ihrem Rechner",
+  pickBo:"Ich bin im Backoffice", pickBoSub:"Zugang zu Produktion und Testumgebungen",
   pickExt:"Ich bin in einem Franchise-Center", pickExtSub:"Sie melden sich über eine Webadresse an",
   choose:"Auswählen",
   dunno:"Ich weiß nicht, welcher Fall auf mich zutrifft",
   dunnoBody:["Schauen Sie auf Ihre Taskleiste am unteren Bildschirmrand.",
    "Sie sehen dort das Parallels-Symbol? Dann sind Sie in einem eigenen Center oder im Backoffice.",
    "Sie sehen es nicht? Dann sind Sie sehr wahrscheinlich in einem Franchise-Center.",
+   "Sie arbeiten in der Werkstatt, in einem Center: wählen Sie <b>eigenes Center</b>. Sie arbeiten in der Zentrale oder in einem Support-Team mit Zugang zu den Testumgebungen: wählen Sie <b>Backoffice</b>.",
    "Immer noch unsicher? Probieren Sie die Adresse <b>myapps.erm.org/de</b> in Chrome. Öffnet sie sich nicht, sind Sie in einem Franchise-Center."],
   back:"← Situation ändern",
   intH1:"Klicken Sie auf das Parallels-Symbol",
   intLead:"Das Symbol ist bereits in Ihrer Taskleiste am unteren Bildschirmrand. Ein Klick, und Parallels öffnet sich. Das ist alles.",
   intIconCaption:"So sieht das Symbol aus, das Sie suchen müssen:",
   intOk:"<b>Nichts zu installieren.</b> Ihr Arbeitsplatz ist bereits eingerichtet, auf PC wie auf Chromebox.",
+  intOkBo:"<b>Der Zugang ist auf Ihrem Rechner bereits eingerichtet.</b> Die Erweiterung AutoLogin müssen Sie bei Bedarf selbst installieren.",
   intNoIcon:"Kein Symbol?", intNoIconP:"Öffnen Sie Chrome und rufen Sie diese Adresse auf:",
   intSame:"Symbol und Adresse führen genau an dieselbe Stelle.",
+  envH:"Produktion und Nicht-Produktion", envProd:"Produktion", envProdP:"Die tägliche Arbeitsumgebung. Sie öffnet sich über das Symbol in Ihrer Taskleiste.",
+  envNp:"Nicht-Produktion", envNpP:"Alle Testumgebungen zusammen: Entwicklung, Integration, Vorproduktion, QAS. Vorbehalten dem Backoffice und den Projektteams.", envNpHow:"Die Adresse ist dieselbe, mit <b>.int</b> nach <b>myapps</b>.",
   extH1:"Parallels öffnen", extLead:"Ihr Zugang läuft über diese Adresse. Setzen Sie ein Lesezeichen, oder installieren Sie Parallels als Anwendung.",
   guideTitle:"Bevor Sie beginnen", guideBtn:"So geht's", guideClose:"Schließen",
   g1t:"Öffnen Sie Parallels", g1s:"Mit der gelben Schaltfläche.",
-  g2t:"Ist die Anzeige zu klein?", g2s:"Installieren Sie Parallels als Anwendung.",
+  g2t:"Ist die Anzeige zu klein?", g2s:"Installieren Sie Parallels als Anwendung.", g2skip:"Wenn Ihnen die Anzeige bereits passt, überspringen Sie diesen Schritt. Sie können ihn jederzeit nachholen.", oneTray:"<b>Drucker mit nur einem Fach?</b> Installieren Sie diese Erweiterung nicht. Sie ist für professionelle Drucker mit mehreren Fächern gedacht. Das Drucken funktioniert auch ohne sie einwandfrei, wenn Sie nur ein Fach haben.",
   g3t:"Installieren Sie Focus Impression", g3s:"Um direkt auf dem Werkstattdrucker zu drucken.",
-  g4t:"Installieren Sie AutoLogin", g4s:"Damit Sie Ihre Anmeldedaten nicht mehr jedes Mal eingeben müssen.",
+  g4t:"Installieren Sie AutoLogin", g4s:"Damit Sie Ihre Anmeldedaten nicht mehr bei jedem Öffnen von Focus eingeben müssen.",
   optional:"Optional",
   open:"Parallels öffnen", openSub:"(Ersatz für Citrix)", portal:"Über dieses neue Portal öffnen Sie Ihre Anwendungen, zum Beispiel Focus.", faq:"Häufige Fragen",
   addrLbl:"In Chrome zu öffnende Adresse",
   printBtn:"Dieses Blatt drucken", printedOn:"Gedruckt am",
-  printBlocked:"Pop-up-Fenster werden von Ihrem Browser blockiert. Öffnen Sie das Blatt in einem neuen Tab und drucken Sie es von dort aus.", printOpen:"Blatt zum Drucken öffnen",
+  printBlocked:"Ihr Browser hat das Öffnen des Blattes verhindert. Klicken Sie auf die Schaltfläche unten, um es zu öffnen, und drucken Sie es dann.", printOpen:"Blatt zum Drucken öffnen",
   imgSoon:"Screenshot folgt",
   helpTxt:"Funktioniert es nicht? Wenden Sie sich an Ihren gewohnten IT-Ansprechpartner.",
   foot:"Euromaster · Parallels ersetzt Citrix · Probleme? Wenden Sie sich an Ihren gewohnten IT-Ansprechpartner.",
-  storeBtn:"Im Chrome Web Store öffnen", copy:"Kopieren", copied:"Kopiert",
+  storeBtn:"Die Seite der Erweiterung öffnen", copy:"Kopieren", copied:"Kopiert", copyManual:"Drücken Sie Strg + C", copyFail:"Kopieren nicht möglich: markieren Sie die Adresse von Hand",
 
   qZoom:"Wie vergrößere oder verkleinere ich die Anzeige?",
   zoomP1:"Das Zoomen in Parallels funktioniert wie in Ihrem Browser.",
@@ -460,20 +493,19 @@ var T = {
   qAutoUse:"Wozu dient die Erweiterung AutoLogin?",
   autoUse1:"AutoLogin füllt Ihre Anmeldedaten auf der Focus-Anmeldeseite automatisch aus. Sie müssen sie nicht mehr jedes Mal eingeben. Sie ersetzt Sign &amp; Go.",
   autoUse2:"Sie ist auf Ihrem Rechner bereits installiert. Klicken Sie bei der ersten Anmeldung auf die Schaltfläche <b>+</b>, um Ihre verschiedenen Konten hinzuzufügen.",
+  autoUse2Bo:"Sie ist auf Ihrem Rechner nicht standardmäßig installiert: die Installationsanleitung finden Sie direkt darunter. Klicken Sie bei der ersten Anmeldung auf die Schaltfläche <b>+</b>, um Ihre verschiedenen Konten hinzuzufügen.",
 
   qClipInt:"Kann ich zwischen Parallels und meinen anderen Anwendungen kopieren und einfügen?",
-  clipInt:"Ja. Die Berechtigung ist auf den Rechnern der eigenen Center und auf den Chromeboxen bereits aktiv. Sie müssen nichts einstellen.",
+  clipInt:"Ja. Die Berechtigung ist auf Ihrem Rechner bereits aktiv, auf PC wie auf Chromebox. Sie müssen nichts einstellen.",
 
   qPwa:"Parallels als Anwendung installieren (5 Minuten)",
-  pwaPre:"Voraussetzungen: Windows-PC mit Google Chrome oder Microsoft Edge.",
-  pwaEdgeStep:"Klicken Sie auf die drei Punkte <kbd>⋮</kbd> oben rechts in Edge, dann auf <b>Weitere Tools</b>, dann auf <b>Apps</b>, dann auf <b>Diese Website als App installieren</b>.", pwaShowFor:"Anleitung anzeigen für", pwaPre2:"Voraussetzung: Windows-PC.", pwaDetected:"Erkannt:", pwaFor:"Anleitung für:",
-  pwaEdge:"<b>Sie nutzen Edge?</b> Klicken Sie auf die drei Punkte <kbd>⋮</kbd> oben rechts, dann auf <b>Weitere Tools</b>, dann auf <b>Apps</b>, dann auf <b>Diese Website als App installieren</b>.",
-  pwaWhy:"Ihr Vorteil: keine Adressleiste und keine Tabs mehr, direkter Zugriff über die Taskleiste, ein aufgeräumterer Bildschirm.",
+  pwaEdgeStep:"Klicken Sie auf die drei Punkte <kbd>⋮</kbd> oben rechts in Edge, dann auf <b>Weitere Tools</b>, dann auf <b>Apps</b>, dann auf <b>Diese Website als App installieren</b>.",
+  pwaWhy:"Was Ihnen die Installation als Anwendung bringt: keine Adressleiste und keine Tabs mehr, direkter Zugriff über die Taskleiste, ein aufgeräumterer Bildschirm.",
   pwaBeforeCap:"Vorher, im Browser", pwaAfterCap:"Nachher, als Anwendung",
-  pwaS1:"Öffnen Sie Parallels mit der Schaltfläche oben auf dieser Seite.",
+  pwaS1:"Öffnen Sie Parallels mit der gelben Schaltfläche in Schritt 1.",
   pwaS2:"Klicken Sie auf die drei Punkte <kbd>⋮</kbd> oben rechts in Chrome, dann auf <b>Übertragen, speichern und teilen</b>, dann auf <b>Seite als App installieren…</b>",
   pwaS3:"Ein Fenster öffnet sich. Klicken Sie auf <b>Installieren</b>.",
-  pwaS4:"Suchen Sie das Parallels-Symbol in Ihrer Taskleiste, klicken Sie mit der rechten Maustaste darauf und dann auf <b>An Taskleiste anheften</b>.",
+  pwaS4:"Suchen Sie das Parallels-Symbol in Ihrer Taskleiste (die Leiste ganz unten am Bildschirm, wo die Uhrzeit steht), klicken Sie mit der <b>rechten Maustaste</b> darauf und dann auf <b>An Taskleiste anheften</b>.",
   pwaOk:"<b>Fertig.</b> Parallels öffnet sich jetzt mit einem Klick über Ihre Taskleiste.",
 
   qClip:"Kopieren und Einfügen zulassen (unter einer Minute)",
@@ -481,24 +513,26 @@ var T = {
   clip2:"<b>Bei der ersten Nutzung.</b> Oben am Bildschirm erscheint ein Fenster. Klicken Sie auf <b>Allow</b> (Zulassen).",
   clipWarn:"Klicken Sie nicht auf <b>Block</b>. Falls doch, oder falls das Fenster verschwunden ist, bevor Sie geklickt haben, befolgen Sie die drei Schritte unten.",
   clip3:"<b>Berechtigung wieder aktivieren.</b>",
-  clipS1:"Klicken Sie auf die Schaltfläche für die Website-Einstellungen, direkt links neben der Adresse in Chrome.",
+  clipS1:"Klicken Sie auf die kleine Schaltfläche direkt links neben der Adresse, oben in Chrome.",
   clipS2:"Aktivieren Sie die Berechtigung <b>Clipboard</b> (Zwischenablage), indem Sie den Schalter nach rechts schieben.",
   clipS3:"Laden Sie die Parallels-Seite neu.",
 
   qAutoInst:"Die Erweiterung AutoLogin installieren (automatische Anmeldung)",
   autoI0:"AutoLogin füllt Ihre Anmeldedaten auf der Focus-Anmeldeseite automatisch aus. Sie ersetzt Sign &amp; Go. Empfohlen, aber optional.",
-  autoI1:"Öffnen Sie die Seite der Erweiterung im Chrome Web Store.",
+  autoI1:"Öffnen Sie die Seite der Erweiterung mit der Schaltfläche unten.",
   autoI2:"Klicken Sie auf <b>Add to Chrome</b> und bestätigen Sie.",
-  autoI3:"Laden Sie Parallels neu oder starten Sie es neu.",
+  autoI3:"Schließen Sie Parallels und öffnen Sie es erneut.",
 
   qFocus:"Focus Impression installieren und Drucker einrichten",
+  qPrint:"Wie drucke ich ein Dokument?", prIntro:"In Focus funktioniert das Druckfenster immer auf dieselbe Weise.", prS1:"Wählen Sie unter <b>Imprimante</b> den Eintrag <b>2X Universal Printer</b>.", prS2:"Wählen Sie unter <b>Bac imprimante</b> das Fach passend zum Dokument: Papier, Etiketten, Allgemeine Geschäftsbedingungen…", prS3:"Klicken Sie auf <b>Imprimer</b>.",
+  prWith:"Mit der Erweiterung Focus Impression", prWithP:"Das Dokument kommt direkt aus dem richtigen Fach des Werkstattdruckers. Sonst ist nichts zu tun.", prNo:"Ohne die Erweiterung", prNoP:"Sie können trotzdem drucken. Wählen Sie denselben Drucker <b>2X Universal Printer</b>: das Druckfenster von Chrome öffnet sich. Wählen Sie dort den Drucker Ihrer Werkstatt und klicken Sie auf <b>Drucken</b>.", prTip:"Die Erweiterung erspart Ihnen diesen zusätzlichen Schritt bei jedem Druck.",
   foc0:"Diese Erweiterung schickt Ihre Focus-Ausdrucke direkt an den richtigen Drucker, ohne das Druckfenster von Chrome.",
-  focS1:"Öffnen Sie die Seite der Erweiterung im Chrome Web Store.",
+  focS1:"Öffnen Sie die Seite der Erweiterung mit der Schaltfläche unten.",
   focS2:"Klicken Sie auf <b>Add to Chrome</b> und bestätigen Sie.",
-  focS3:"Öffnen Sie die Konfigurationsseite. Diese Adresse ist nicht anklickbar: kopieren Sie sie und fügen Sie sie in die Adressleiste von Chrome ein.",
+  focS3:"Kopieren Sie die Adresse unten mit der Schaltfläche <b>Kopieren</b>, fügen Sie sie in die Adressleiste von Chrome ein und drücken Sie die Eingabetaste: die Konfigurationsseite für den Druck öffnet sich.", addrCopyLbl:"Zu kopierende Adresse",
   focS4:"Die Erweiterung sucht die Drucker der Werkstatt. Rechnen Sie mit etwa 30 Sekunden und <b>lassen Sie die Seite geöffnet</b>, solange die Suche läuft.",
-  focIpNote:"Wird der Drucker nicht automatisch erkannt, können Sie seine IP-Adresse manuell eingeben — die Erweiterung bietet dafür integrierte Hilfen.",
-  focS5:"Ihr Drucker erscheint mit Adresse und Fächern. Mit <b>Namen ändern</b> können Sie die Fächer umbenennen, damit Sie sich leichter zurechtfinden.",
+  focIpNote:"Wird der Drucker nicht von selbst gefunden, erklärt Ihnen die Erweiterung Schritt für Schritt, wie Sie ihn von Hand hinzufügen.",
+  focS5:"Ihr Drucker erscheint mit Adresse und Fächern. Optional: mit <b>Namen ändern</b> können Sie die Fächer umbenennen, damit Sie sich leichter zurechtfinden. Sie müssen das nicht tun.",
   focOk:"<b>Fertig.</b> Ihre Ausdrucke aus Focus gehen jetzt direkt an den Drucker. Diese Einstellungen begleiten Sie beim Wechsel des PCs: einmal einrichten genügt."
  },
 
@@ -506,36 +540,41 @@ var T = {
   name:"Nederlands", region:"Nederland",
   h1:"Toegang tot Parallels", lead:"Kies uw situatie.",
   ctx:"Parallels vervangt Citrix. Alleen het toegangsportaal verandert: uw applicaties werken precies zoals voorheen.",
-  pickInt:"Ik werk in een eigen vestiging of op de backoffice", pickIntSub:"Het pictogram staat al op uw pc",
+  pickInt:"Ik werk in een eigen vestiging", pickIntSub:"Het pictogram staat al op uw pc",
+  pickBo:"Ik werk op de backoffice", pickBoSub:"Toegang tot productie en testomgevingen",
   pickExt:"Ik werk in een franchisevestiging", pickExtSub:"U meldt zich aan via een webadres",
   choose:"Kiezen",
   dunno:"Ik weet niet welk geval voor mij geldt",
   dunnoBody:["Kijk in uw taakbalk, onderaan het scherm.",
    "Ziet u daar het Parallels-pictogram? Dan werkt u in een eigen vestiging of op de backoffice.",
    "Ziet u het niet? Dan werkt u vrijwel zeker in een franchisevestiging.",
+   "Werkt u in de werkplaats, in een vestiging: kies <b>eigen vestiging</b>. Werkt u op het hoofdkantoor of in een supportteam, met toegang tot de testomgevingen: kies <b>backoffice</b>.",
    "Nog steeds niet zeker? Probeer het adres <b>myapps.erm.org/nl</b> in Chrome. Opent het niet, dan werkt u in een franchisevestiging."],
   back:"← Situatie wijzigen",
   intH1:"Klik op het Parallels-pictogram",
   intLead:"Het pictogram staat al in uw taakbalk, onderaan het scherm. Eén klik en Parallels opent. Dat is alles.",
   intIconCaption:"Zo ziet het pictogram eruit dat u moet zoeken:",
   intOk:"<b>Niets te installeren.</b> Uw pc is al ingesteld, zowel op pc als op Chromebox.",
+  intOkBo:"<b>De toegang is al ingesteld op uw pc.</b> De extensie AutoLogin installeert u zelf als u die nodig hebt.",
   intNoIcon:"Geen pictogram?", intNoIconP:"Open Chrome en ga naar dit adres:",
   intSame:"Het pictogram en het adres leiden naar precies dezelfde plek.",
+  envH:"Productie en niet-productie", envProd:"Productie", envProdP:"De dagelijkse werkomgeving. Die opent met het pictogram in uw taakbalk.",
+  envNp:"Niet-productie", envNpP:"Alle testomgevingen samen: ontwikkeling, integratie, preproductie, QAS. Voorbehouden aan de backoffice en de projectteams.", envNpHow:"Het adres is hetzelfde, met <b>.int</b> na <b>myapps</b>.",
   extH1:"Parallels openen", extLead:"U werkt via dit adres. Zet het bij uw favorieten, of installeer Parallels als applicatie.",
   guideTitle:"Voordat u begint", guideBtn:"Zo doet u dat", guideClose:"Sluiten",
   g1t:"Open Parallels", g1s:"Met de gele knop.",
-  g2t:"Is de weergave te klein?", g2s:"Installeer Parallels als applicatie.",
+  g2t:"Is de weergave te klein?", g2s:"Installeer Parallels als toepassing.", g2skip:"Bevalt de weergave u al, sla deze stap dan over. U kunt hem op elk moment alsnog doen.", oneTray:"<b>Printer met slechts één lade?</b> Installeer deze extensie niet. Ze is bedoeld voor professionele printers met meerdere lades. Afdrukken werkt prima zonder de extensie als u maar één lade hebt.",
   g3t:"Installeer Focus Impression", g3s:"Om rechtstreeks op de printer van de werkplaats af te drukken.",
-  g4t:"Installeer AutoLogin", g4s:"Zodat u uw inloggegevens niet elke keer hoeft in te voeren.",
+  g4t:"Installeer AutoLogin", g4s:"Zodat u uw inloggegevens niet meer hoeft in te voeren bij elke opening van Focus.",
   optional:"Optioneel",
   open:"Parallels openen", openSub:"(vervangt Citrix)", portal:"Via dit nieuwe portaal opent u uw applicaties, zoals Focus.", faq:"Veelgestelde vragen",
   addrLbl:"Adres om te openen in Chrome",
   printBtn:"Deze fiche afdrukken", printedOn:"Afgedrukt op",
-  printBlocked:"Pop-upvensters worden geblokkeerd door uw browser. Open de fiche in een nieuw tabblad en druk hem daar af.", printOpen:"Fiche openen om af te drukken",
+  printBlocked:"Uw browser heeft het openen van de fiche geblokkeerd. Klik op de knop hieronder om hem te openen en druk hem daarna af.", printOpen:"Fiche openen om af te drukken",
   imgSoon:"Schermafbeelding volgt",
   helpTxt:"Werkt het niet? Neem contact op met uw gebruikelijke IT-contactpersoon.",
   foot:"Euromaster · Parallels vervangt Citrix · Problemen? Neem contact op met uw gebruikelijke IT-contactpersoon.",
-  storeBtn:"Openen in de Chrome Web Store", copy:"Kopiëren", copied:"Gekopieerd",
+  storeBtn:"De pagina van de extensie openen", copy:"Kopiëren", copied:"Gekopieerd", copyManual:"Druk op Ctrl + C", copyFail:"Kopiëren lukt niet: selecteer het adres met de hand",
 
   qZoom:"Hoe vergroot of verklein ik de weergave?",
   zoomP1:"Zoomen in Parallels werkt net als in uw browser.",
@@ -547,20 +586,19 @@ var T = {
   qAutoUse:"Waarvoor dient de extensie AutoLogin?",
   autoUse1:"AutoLogin vult uw inloggegevens automatisch in op de Focus-inlogpagina. U hoeft ze niet meer elke keer te typen. De extensie vervangt Sign &amp; Go.",
   autoUse2:"De extensie is al op uw pc geïnstalleerd. Klik bij uw eerste aanmelding op de knop <b>+</b> om uw verschillende accounts toe te voegen.",
+  autoUse2Bo:"De extensie is niet standaard op uw pc geïnstalleerd: de installatieprocedure staat hieronder. Klik bij uw eerste aanmelding op de knop <b>+</b> om uw verschillende accounts toe te voegen.",
 
   qClipInt:"Kan ik kopiëren en plakken tussen Parallels en mijn andere applicaties?",
-  clipInt:"Ja. De toestemming staat al aan op de pc's van eigen vestigingen en op de Chromeboxen. U hoeft niets in te stellen.",
+  clipInt:"Ja. De toestemming staat al aan op uw pc, zowel pc als Chromebox. U hoeft niets in te stellen.",
 
   qPwa:"Parallels als applicatie installeren (5 minuten)",
-  pwaPre:"Vereisten: Windows-pc met Google Chrome of Microsoft Edge.",
-  pwaEdgeStep:"Klik op de drie puntjes <kbd>⋮</kbd> rechtsboven in Edge, dan op <b>Extra hulpmiddelen</b>, dan op <b>Apps</b>, dan op <b>Deze site installeren als app</b>.", pwaShowFor:"Procedure weergeven voor", pwaPre2:"Vereiste: Windows-pc.", pwaDetected:"Gedetecteerd:", pwaFor:"Procedure voor:",
-  pwaEdge:"<b>Gebruikt u Edge?</b> Klik op de drie puntjes <kbd>⋮</kbd> rechtsboven, dan op <b>Extra hulpmiddelen</b>, dan op <b>Apps</b>, dan op <b>Deze site installeren als app</b>.",
-  pwaWhy:"Wat u ermee wint: geen adresbalk en tabbladen meer, directe toegang vanuit de taakbalk, een rustiger scherm.",
+  pwaEdgeStep:"Klik op de drie puntjes <kbd>⋮</kbd> rechtsboven in Edge, dan op <b>Extra hulpmiddelen</b>, dan op <b>Apps</b>, dan op <b>Deze site installeren als app</b>.",
+  pwaWhy:"Wat u wint door het als toepassing te installeren: geen adresbalk en tabbladen meer, directe toegang vanuit de taakbalk, een rustiger scherm.",
   pwaBeforeCap:"Voor, in de browser", pwaAfterCap:"Na, als applicatie",
-  pwaS1:"Open Parallels met de knop bovenaan deze pagina.",
+  pwaS1:"Open Parallels met de gele knop bij stap 1.",
   pwaS2:"Klik op de drie puntjes <kbd>⋮</kbd> rechtsboven in Chrome, dan op <b>Casten, opslaan en delen</b>, dan op <b>Pagina installeren als app…</b>",
   pwaS3:"Er verschijnt een venster. Klik op <b>Installeren</b>.",
-  pwaS4:"Zoek het Parallels-pictogram in uw taakbalk, klik er met de rechtermuisknop op en klik dan op <b>Vastmaken aan taakbalk</b>.",
+  pwaS4:"Zoek het Parallels-pictogram in uw taakbalk (de balk helemaal onderaan het scherm, waar de tijd staat), klik er met de <b>rechtermuisknop</b> op en klik dan op <b>Vastmaken aan taakbalk</b>.",
   pwaOk:"<b>Klaar.</b> Parallels opent nu met één klik vanuit uw taakbalk.",
 
   qClip:"Kopiëren en plakken toestaan (minder dan een minuut)",
@@ -568,24 +606,26 @@ var T = {
   clip2:"<b>Bij het eerste gebruik.</b> Bovenaan het scherm verschijnt een venster. Klik op <b>Allow</b> (Toestaan).",
   clipWarn:"Klik niet op <b>Block</b>. Is dat toch gebeurd, of is het venster verdwenen voordat u kon klikken, volg dan de drie stappen hieronder.",
   clip3:"<b>De toestemming opnieuw activeren.</b>",
-  clipS1:"Klik op de knop voor site-instellingen, direct links van het adres in Chrome.",
+  clipS1:"Klik op het kleine knopje direct links van het adres, bovenaan Chrome.",
   clipS2:"Zet de toestemming <b>Clipboard</b> (Klembord) aan door de schuifknop naar rechts te schuiven.",
   clipS3:"Vernieuw de Parallels-pagina.",
 
   qAutoInst:"De extensie AutoLogin installeren (automatisch inloggen)",
   autoI0:"AutoLogin vult uw inloggegevens automatisch in op de Focus-inlogpagina. De extensie vervangt Sign &amp; Go. Aanbevolen, maar niet verplicht.",
-  autoI1:"Open de pagina van de extensie in de Chrome Web Store.",
+  autoI1:"Open de pagina van de extensie met de knop hieronder.",
   autoI2:"Klik op <b>Add to Chrome</b> en bevestig.",
-  autoI3:"Vernieuw of herstart Parallels.",
+  autoI3:"Sluit Parallels en open het opnieuw.",
 
   qFocus:"Focus Impression installeren en uw printer instellen",
+  qPrint:"Hoe druk ik een document af?", prIntro:"In Focus werkt het printvenster altijd op dezelfde manier.", prS1:"Kies bij <b>Imprimante</b> de optie <b>2X Universal Printer</b>.", prS2:"Kies bij <b>Bac imprimante</b> de lade die past bij wat u afdrukt: papier, etiketten, algemene voorwaarden…", prS3:"Klik op <b>Imprimer</b>.",
+  prWith:"Met de extensie Focus Impression", prWithP:"Het document komt direct uit de juiste lade van de printer in de werkplaats. Verder hoeft u niets te doen.", prNo:"Zonder de extensie", prNoP:"U kunt toch afdrukken. Kies dezelfde printer <b>2X Universal Printer</b>: het printvenster van Chrome opent. Kies daar de printer van uw werkplaats en klik op <b>Afdrukken</b>.", prTip:"De extensie bespaart u deze extra stap bij elke afdruk.",
   foc0:"Deze extensie stuurt uw Focus-afdrukken direct naar de juiste printer, zonder het printvenster van Chrome.",
-  focS1:"Open de pagina van de extensie in de Chrome Web Store.",
+  focS1:"Open de pagina van de extensie met de knop hieronder.",
   focS2:"Klik op <b>Add to Chrome</b> en bevestig.",
-  focS3:"Open de instellingenpagina. Dit adres is niet aanklikbaar: kopieer het en plak het in de adresbalk van Chrome.",
+  focS3:"Kopieer het adres hieronder met de knop <b>Kopiëren</b>, plak het in de adresbalk van Chrome en druk op Enter: de instellingenpagina voor het afdrukken opent.", addrCopyLbl:"Te kopiëren adres",
   focS4:"De extensie zoekt de printers van de werkplaats. Reken op ongeveer 30 seconden en <b>laat de pagina open staan</b> tijdens het zoeken.",
-  focIpNote:"Wordt de printer niet automatisch gedetecteerd, dan kunt u het IP-adres handmatig invoeren — de extensie biedt hiervoor ingebouwde hulp.",
-  focS5:"Uw printer verschijnt met zijn adres en lades. Met <b>Namen wijzigen</b> kunt u de lades hernoemen zodat u ze makkelijker terugvindt.",
+  focIpNote:"Verschijnt de printer niet vanzelf, dan legt de extensie stap voor stap uit hoe u hem met de hand toevoegt.",
+  focS5:"Uw printer verschijnt met zijn adres en lades. Optioneel: met <b>Namen wijzigen</b> kunt u de lades hernoemen zodat u ze makkelijker terugvindt. Dit hoeft niet.",
   focOk:"<b>Klaar.</b> Uw afdrukken uit Focus gaan nu direct naar de printer. Deze instellingen gaan met u mee als u van pc wisselt: eenmalig instellen is genoeg."
  },
 
@@ -593,36 +633,41 @@ var T = {
   name:"English", region:"United Kingdom",
   h1:"Accessing Parallels", lead:"Choose your situation.",
   ctx:"Parallels replaces Citrix. Only the access portal changes: your applications work exactly as before.",
-  pickInt:"I work in a company-owned centre or back office", pickIntSub:"The icon is already on your computer",
+  pickInt:"I work in a company-owned centre", pickIntSub:"The icon is already on your computer",
+  pickBo:"I work in the back office", pickBoSub:"Access to production and test environments",
   pickExt:"I work in a franchise centre", pickExtSub:"You sign in through a web address",
   choose:"Choose",
   dunno:"I don't know which case applies to me",
   dunnoBody:["Look at your taskbar, at the bottom of the screen.",
    "Can you see the Parallels icon? You are in a company-owned centre or a back office.",
    "You cannot see it? You are almost certainly in a franchise centre.",
+   "You work in a workshop, at a centre: choose <b>company-owned centre</b>. You work at head office or in a support team, with access to the test environments: choose <b>back office</b>.",
    "Still unsure? Try the address <b>myapps.erm.org/uk</b> in Chrome. If it does not open, you are in a franchise centre."],
   back:"← Change situation",
   intH1:"Click the Parallels icon",
   intLead:"The icon is already in your taskbar, at the bottom of the screen. One click and Parallels opens. That's all.",
   intIconCaption:"This is what the icon looks like:",
   intOk:"<b>Nothing to install.</b> Your computer is already set up, on PC and on Chromebox alike.",
+  intOkBo:"<b>Access is already set up on your computer.</b> The AutoLogin extension, however, is yours to install if you need it.",
   intNoIcon:"No icon?", intNoIconP:"Open Chrome and go to this address:",
   intSame:"The icon and the address take you to exactly the same place.",
+  envH:"Production and non-production", envProd:"Production", envProdP:"The day-to-day working environment. This is what opens from the icon in your taskbar.",
+  envNp:"Non-production", envNpP:"All test environments together: development, integration, pre-production, QAS. Reserved for the back office and project teams.", envNpHow:"The address is the same, with <b>.int</b> added after <b>myapps</b>.",
   extH1:"Open Parallels", extLead:"You sign in through this address. Bookmark it, or install Parallels as an application.",
   guideTitle:"Before you start", guideBtn:"See how", guideClose:"Close",
   g1t:"Open Parallels", g1s:"With the yellow button.",
-  g2t:"Is the display too small?", g2s:"Install Parallels as an application.",
+  g2t:"Is the display too small?", g2s:"Install Parallels as an application.", g2skip:"If the display already suits you, skip this step. You can do it at any time.", oneTray:"<b>Printer with only one tray?</b> Do not install this extension. It is designed for professional printers with several trays. Printing works perfectly well without it if you only have one tray.",
   g3t:"Install Focus Impression", g3s:"To print straight to the workshop printer.",
-  g4t:"Install AutoLogin", g4s:"So you no longer type your credentials every time.",
+  g4t:"Install AutoLogin", g4s:"So you no longer type your credentials each time you open Focus.",
   optional:"Optional",
   open:"Open Parallels", openSub:"(replaces Citrix)", portal:"This is the new portal you use to open your applications, such as Focus.", faq:"Frequently asked questions",
   addrLbl:"Address to open in Chrome",
   printBtn:"Print this sheet", printedOn:"Printed on",
-  printBlocked:"Pop-up windows are blocked by your browser. Open the sheet in a new tab, then print it from there.", printOpen:"Open the sheet to print",
+  printBlocked:"Your browser stopped the sheet from opening. Click the button below to open it, then print it.", printOpen:"Open the sheet to print",
   imgSoon:"Screenshot coming",
   helpTxt:"Not working? Contact your usual IT contact.",
   foot:"Euromaster · Parallels replaces Citrix · A problem? Contact your usual IT contact.",
-  storeBtn:"Open in the Chrome Web Store", copy:"Copy", copied:"Copied",
+  storeBtn:"Open the extension page", copy:"Copy", copied:"Copied", copyManual:"Press Ctrl + C", copyFail:"Copy unavailable: select the address by hand",
 
   qZoom:"How do I make the display bigger or smaller?",
   zoomP1:"Zooming in Parallels works just like zooming in your browser.",
@@ -634,20 +679,19 @@ var T = {
   qAutoUse:"What is the AutoLogin extension for?",
   autoUse1:"AutoLogin fills in your credentials automatically on the Focus sign-in page, so you no longer type them every time. It replaces Sign &amp; Go.",
   autoUse2:"It is already installed on your computer. The first time you sign in, click the <b>+</b> button to add your different accounts.",
+  autoUse2Bo:"It is not installed by default on your computer: the installation procedure is just below. The first time you sign in, click the <b>+</b> button to add your different accounts.",
 
   qClipInt:"Can I copy and paste between Parallels and my other applications?",
-  clipInt:"Yes. The permission is already active on computers in company-owned centres and on Chromeboxes. There is nothing to set up.",
+  clipInt:"Yes. The permission is already active on your computer, PC and Chromebox alike. There is nothing to set up.",
 
   qPwa:"Install Parallels as an application (5 minutes)",
-  pwaPre:"Requirements: Windows PC, with Google Chrome or Microsoft Edge.",
-  pwaEdgeStep:"Click the 3 dots <kbd>⋮</kbd> at the top right of Edge, then <b>More tools</b>, then <b>Apps</b>, then <b>Install this site as an app</b>.", pwaShowFor:"Show the procedure for", pwaPre2:"Requirement: Windows PC.", pwaDetected:"Detected:", pwaFor:"Procedure for:",
-  pwaEdge:"<b>Using Edge?</b> Click the 3 dots <kbd>⋮</kbd> at the top right, then <b>More tools</b>, then <b>Apps</b>, then <b>Install this site as an app</b>.",
-  pwaWhy:"What you gain: no more address bar or tabs, direct access from the taskbar, a clearer screen.",
+  pwaEdgeStep:"Click the 3 dots <kbd>⋮</kbd> at the top right of Edge, then <b>More tools</b>, then <b>Apps</b>, then <b>Install this site as an app</b>.",
+  pwaWhy:"What you gain by installing it as an application: no more address bar or tabs, direct access from the taskbar, a clearer screen.",
   pwaBeforeCap:"Before, in the browser", pwaAfterCap:"After, as an application",
-  pwaS1:"Open Parallels with the button at the top of this page.",
+  pwaS1:"Open Parallels with the yellow button in step 1.",
   pwaS2:"Click the 3 dots <kbd>⋮</kbd> at the top right of Chrome, then <b>Cast, save and share</b>, then <b>Install page as app…</b>",
   pwaS3:"A window opens. Click <b>Install</b>.",
-  pwaS4:"Find the Parallels icon in your taskbar, right-click it, then click <b>Pin to taskbar</b>.",
+  pwaS4:"Find the Parallels icon in your taskbar (the bar right at the bottom of the screen, where the time is), <b>right-click</b> it, then click <b>Pin to taskbar</b>.",
   pwaOk:"<b>Done.</b> Parallels now opens with one click from your taskbar.",
 
   qClip:"Allow copy and paste (less than a minute)",
@@ -655,24 +699,26 @@ var T = {
   clip2:"<b>On first use.</b> A window appears at the top of the screen. Click <b>Allow</b>.",
   clipWarn:"Do not click <b>Block</b>. If you did, or if the window disappeared before you could click, follow the three steps below.",
   clip3:"<b>Turn the permission back on.</b>",
-  clipS1:"Click the site settings button, just to the left of the address in Chrome.",
+  clipS1:"Click the small button just to the left of the address, at the top of Chrome.",
   clipS2:"Turn on the <b>Clipboard</b> permission by sliding the button to the right.",
   clipS3:"Reload the Parallels page.",
 
   qAutoInst:"Install the AutoLogin extension (automatic sign-in)",
   autoI0:"AutoLogin fills in your credentials automatically on the Focus sign-in page. It replaces Sign &amp; Go. Recommended, but optional.",
-  autoI1:"Open the extension page in the Chrome Web Store.",
+  autoI1:"Open the extension page with the button below.",
   autoI2:"Click <b>Add to Chrome</b>, then confirm.",
-  autoI3:"Refresh or restart Parallels.",
+  autoI3:"Close Parallels, then open it again.",
 
   qFocus:"Install Focus Impression and set up your printer",
+  qPrint:"How do I print a document?", prIntro:"In Focus, the print window always works the same way.", prS1:"Under <b>Imprimante</b>, select <b>2X Universal Printer</b>.", prS2:"Under <b>Bac imprimante</b>, select the tray matching what you are printing: paper, labels, terms and conditions…", prS3:"Click <b>Imprimer</b>.",
+  prWith:"With the Focus Impression extension", prWithP:"The document comes straight out of the right tray on the workshop printer. Nothing else to do.", prNo:"Without the extension", prNoP:"You can still print. Select the same printer, <b>2X Universal Printer</b>: Chrome's print window opens. Select your workshop printer there, then click <b>Print</b>.", prTip:"The extension saves you this extra step on every print job.",
   foc0:"This extension sends your Focus print jobs straight to the right printer, without going through Chrome's print window.",
-  focS1:"Open the extension page in the Chrome Web Store.",
+  focS1:"Open the extension page with the button below.",
   focS2:"Click <b>Add to Chrome</b>, then confirm.",
-  focS3:"Open the settings page. This address is not clickable: copy it, then paste it into Chrome's address bar.",
+  focS3:"Copy the address below using the <b>Copy</b> button, paste it into Chrome's address bar and press Enter: the print settings page opens.", addrCopyLbl:"Address to copy",
   focS4:"The extension looks for the workshop printers. Allow about 30 seconds, and <b>leave the page open</b> while it searches.",
-  focIpNote:"If the printer is not detected automatically, you can enter its IP address manually — the extension includes built-in helpers to guide you.",
-  focS5:"Your printer appears with its address and trays. Use <b>Edit names</b> to rename the trays so you can find them more easily.",
+  focIpNote:"If the printer does not appear on its own, the extension explains step by step how to add it by hand.",
+  focS5:"Your printer appears with its address and trays. Optional: use <b>Edit names</b> to rename the trays so you can find them more easily. You do not have to.",
   focOk:"<b>Done.</b> Your Focus print jobs now go straight to the printer. These settings follow you when you change PC, so you only do this once."
  }
 };
@@ -690,6 +736,7 @@ function ico(n, s){
     desktop : '<rect x="2" y="4" width="20" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path>',
     globe   : '<circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"></path>',
     cursor  : '<path d="M5 3l6.5 16 2.2-6.3L20 10.5z"></path>',
+    warn    : '<path d="M12 3.8 2.9 19.5h18.2z"></path><path d="M12 10v4.2"></path><circle cx="12" cy="17.2" r=".8" fill="currentColor" stroke="none"></circle>',
     play    : '<circle cx="12" cy="12" r="9"></circle><path d="M10 8.5l6 3.5-6 3.5z"></path>'
   }[n] || '';
   return o + p + '</svg>';
@@ -732,6 +779,11 @@ function bar(t){
   return b+'</div></div></div>';
 }
 
+function envRow(t, title, desc, u){
+  return '<div class="env"><b>'+title+'</b><p>'+desc+'</p>'+
+    '<div class="row"><code>'+u.replace("https://","")+'</code>'+
+    '<button class="btn ghost" onclick="cpVal(this,\''+u+'\')">'+ico('clip',18)+t.copy+'</button></div></div>';
+}
 function addrBlock(t, u){
   return '<div class="addr"><p class="lbl">'+t.addrLbl+'</p><div class="row">'+
     '<code>'+u.replace("https://","")+'</code>'+
@@ -766,10 +818,14 @@ function procPwa(t){
 }
 function procFocus(t){
   return printBar(t,'focus')+
+    '<div class="note warn wico"><p>'+ico('warn',26)+'<span>'+t.oneTray+'</span></p></div>'+
     '<p>'+t.foc0+'</p>'+
     ol([t.focS1+'<div style="margin-top:10px"><a class="btn store" href="'+STORE_FOCUS+'" target="_blank" rel="noopener">'+t.storeBtn+'</a></div>',
         t.focS2+figA(IMG.focusStore),
-        t.focS3+'<div class="copy"><input id="fx" readonly value="'+FOCUS_OPTIONS+'" onclick="this.select()"><button class="btn ghost" onclick="cp(this)">'+t.copy+'</button></div>',
+        t.focS3+'<div class="copybox"><p class="lbl">'+t.addrCopyLbl+'</p><div class="copy">'+
+          '<input id="fx" readonly value="'+FOCUS_OPTIONS+'" onclick="this.select()">'+
+          '<button class="btn ghost" onclick="cpVal(this,\''+FOCUS_OPTIONS+'\',\'fx\')">'+ico('clip',18)+t.copy+'</button>'+
+        '</div></div>',
         t.focS4+'<p class="small" style="margin:8px 0 0">'+t.focIpNote+'</p>',
         t.focS5])+
     '<div class="note ok"><p>'+t.focOk+'</p></div>'+help(t);
@@ -787,6 +843,15 @@ function procClip(t){
     '<p>'+t.clip3+'</p>'+ol([t.clipS1,t.clipS2,t.clipS3])+
     figA(IMG.clipReset)+help(t);
 }
+function faqPrint(t){
+  var b = '<p>'+t.prIntro+'</p>'+
+    ol([t.prS1, t.prS2, t.prS3])+
+    figA(IMG.printWin)+
+    '<div class="note ok"><p><b>'+t.prWith+'</b><br>'+t.prWithP+'</p></div>'+
+    '<div class="note"><p><b>'+t.prNo+'</b><br>'+t.prNoP+'</p>'+
+    '<p class="small" style="margin:8px 0 0">'+t.prTip+'</p></div>';
+  return det(t.qPrint, b+vlink('print')+help(t), null, 'printer');
+}
 function faqZoom(t){
   var b = '<p>'+t.zoomP1+'</p><p>'+t.zoomP2+'</p><p>'+t.zoomP3+'</p>'+
     (IMG.zoomIcon?'<div style="display:flex;align-items:center;gap:16px;margin:14px 0 16px">'+
@@ -800,6 +865,8 @@ function faqZoom(t){
 /* --- bloc vidéo (haut de fiche) --- */
 var vBrowser = null, vManual = false;
 function detectBrowser(){
+  /* les postes des centres intégrés sont tous sous Chrome */
+  if(profile === "int") return "chrome";
   var ua = navigator.userAgent || "";
   return /Edg\//.test(ua) ? "edge" : "chrome";
 }
@@ -809,30 +876,36 @@ function videoBlock(){
   if(!vBrowser) vBrowser = detectBrowser();
   return '<div class="step vstep" id="video"><div class="head">'+
     '<div class="vnum">'+ico('play',20)+'</div>'+
-    '<div class="txt"><div class="ttl"><b>'+v.title+'</b></div><span>'+v.lead+'</span></div>'+
+    '<div class="txt"><div class="ttl"><b>'+v.title+'</b></div><span>'+
+    (profile==="int"?v.leadEx:v.lead)+'</span></div>'+
     '<div class="go"><button class="btn ghost" id="vbtn" onclick="toggleVideo()">'+
     v.watch+'</button></div></div>'+
     '<div class="proc" id="vproc"></div></div>';
 }
 function videoPanel(){
   var v = VT[lang] || VT.fr;
-  var h = '<div class="vbrowse"><span>'+v.browser+'</span>';
-  ["chrome","edge"].forEach(function(k){
-    h += '<button onclick="setBrowser(\''+k+'\')" aria-current="'+(k===vBrowser)+'">'+
-      VIDEOS[k].label+'</button>';
-  });
-  h += '</div>'+
+  var h = '';
+  if(profile !== "int"){
+    h += '<div class="vbrowse"><span>'+v.browser+'</span>';
+    ["chrome","edge"].forEach(function(k){
+      h += '<button onclick="setBrowser(\''+k+'\')" aria-current="'+(k===vBrowser)+'">'+
+        VIDEOS[k].label+'</button>';
+    });
+    h += '</div>';
+  }
+  h += 
     '<div class="vframe"><video id="vplayer" src="'+vsrc()+'" title="'+v.title+'" '+
     'controls preload="metadata" playsinline></video></div>'+
     '<div class="vchaps"><span class="vlbl">'+v.chapters+'</span>';
-  CH_ORDER.forEach(function(k){
+  var list = profile === "int" ? ["example"] : CH_ORDER;
+  list.forEach(function(k){
     var s = VIDEOS[vBrowser].ch[k];
-    var off = (k === "print" && profile === "int");
+    var off = (k === "print" && profile !== "ext");
     h += '<button class="'+(off?'vdim':'')+'" onclick="goChapter('+s+')">'+fmt(s)+' · '+v[k]+
       (off?' <i>('+v.notFor+')</i>':'')+'</button>';
   });
   h += '</div>';
-  if(profile === "int") h += '<p class="vnote">'+v.noPrint+'</p>';
+  if(profile === "bo") h += '<p class="vnote">'+v.noPrint+'</p>';
   return h;
 }
 function openVideo(){
@@ -840,6 +913,12 @@ function openVideo(){
   if(!el || el.classList.contains('open')) return;
   document.getElementById('vproc').innerHTML = videoPanel();
   el.classList.add('open');
+  if(profile === "int"){
+    var f = document.getElementById('vplayer');
+    if(f) f.addEventListener('loadedmetadata', function(){
+      try{ f.currentTime = VIDEOS[vBrowser].ch.example; }catch(e){}
+    }, {once:true});
+  }
   var b = document.getElementById('vbtn');
   if(b) b.textContent = (VT[lang]||VT.fr).close;
 }
@@ -933,6 +1012,8 @@ function viewProfile(t){
     '<div class="choices">'+
       '<button class="pick" onclick="goProfile(\'int\')">'+ico('desktop',34)+
         '<b>'+t.pickInt+'</b><span>'+t.pickIntSub+'</span><span class="go">'+t.choose+' →</span></button>'+
+      '<button class="pick" onclick="goProfile(\'bo\')">'+ico('app',34)+
+        '<b>'+t.pickBo+'</b><span>'+t.pickBoSub+'</span><span class="go">'+t.choose+' →</span></button>'+
       '<button class="pick" onclick="goProfile(\'ext\')">'+ico('globe',34)+
         '<b>'+t.pickExt+'</b><span>'+t.pickExtSub+'</span><span class="go">'+t.choose+' →</span></button>'+
     '</div>'+
@@ -942,31 +1023,38 @@ function viewProfile(t){
 
 function viewInt(t){
   var u = U[lang].int;
+  var heroIcon = profile==="bo" ? IMG.iconBo : IMG.pwaIcon;
   return bar(t)+'<div class="wrap"><h1 style="margin-top:24px">'+t.intH1+' <i class="sub">'+t.openSub+'</i></h1>'+
     '<p class="portal">'+t.portal+'</p><p class="lead">'+t.intLead+'</p>'+
     '<div class="hero">'+
-      (IMG.pwaIcon?'<img src="'+IMG.pwaIcon+'" alt="">':'')+
+      (heroIcon?'<img src="'+heroIcon+'" alt="">':'')+
       '<div class="t"><b>'+t.intIconCaption+'</b></div>'+
     '</div>'+
-    figA(IMG.taskbar)+
-    '<div class="note ok"><p>'+t.intOk+'</p></div>'+
+    figA(profile==="bo" ? IMG.taskbarBo : IMG.taskbar)+
+    '<div class="note ok"><p>'+(profile==="bo"?t.intOkBo:t.intOk)+'</p></div>'+
     '<h2>'+t.intNoIcon+'</h2><p>'+t.intNoIconP+'</p>'+
     addrBlock(t,u)+
     '<a class="cta" href="'+u+'" target="_blank" rel="noopener">'+ico('cursor',22)+t.open+'</a>'+
     '<p class="small" style="margin-top:16px">'+t.intSame+'</p>'+
+    (profile==="bo" ? '<h2>'+t.envH+'</h2>'+
+      '<div class="envs">'+
+        envRow(t, t.envProd, t.envProdP, u)+
+        envRow(t, t.envNp, t.envNpP+' '+t.envNpHow, u.replace("myapps.","myapps.int."))+
+      '</div>' : '')+
     videoBlock()+
     '<h2>'+t.faq+'</h2>'+
     faqZoom(t)+
-    det(t.qAutoUse,'<p>'+t.autoUse1+'</p><p>'+t.autoUse2+'</p>'+fig(IMG.autologinLook)+
-      '<p style="margin:0 0 12px">'+vlink('auto')+'</p>'+help(t),null,'key')+
+    det(t.qAutoUse,'<p>'+t.autoUse1+'</p><p>'+(profile==="bo"?t.autoUse2Bo:t.autoUse2)+'</p>'+fig(IMG.autologinLook)+
+      help(t),null,'key')+
+    (profile==="bo" ? det(t.qAutoInst, procAuto(t), null, 'key') : '')+
     det(t.qClipInt,'<p>'+t.clipInt+'</p>',null,'clip')+
     '<p class="foot">'+t.foot+'</p></div>';
 }
 
-function step(n, icon, title, sub, key, btn, tag, cta, ch){
+function step(n, icon, title, sub, key, btn, tag, cta, ch, hint){
   var h = '<div class="step" id="step-'+(key||n)+'"><div class="head">'+
     '<div class="num">'+n+'</div>'+ico(icon,26)+
-    '<div class="txt"><div class="ttl"><b>'+title+'</b>'+(tag?'<span class="tag">'+tag+'</span>':'')+'</div><span>'+sub+'</span>'+(ch?vlink(ch):'')+'</div>';
+    '<div class="txt"><div class="ttl"><b>'+title+'</b>'+(tag?'<span class="tag">'+tag+'</span>':'')+'</div><span>'+sub+'</span>'+(hint?'<span class="skip">'+hint+'</span>':'')+(ch?vlink(ch):'')+'</div>';
   if(cta) h += '<div class="go"><a class="cta sm" href="'+cta+'" target="_blank" rel="noopener" '+
     'onclick="markDone(\'step-'+(key||n)+'\')">'+ico('cursor',20)+btn+'</a></div>';
   else if(key) h += '<div class="go"><button class="btn ghost" id="btn-'+key+'" onclick="toggleStep(\''+key+'\')">'+btn+'</button></div>';
@@ -983,12 +1071,13 @@ function viewExt(t){
     '<h2>'+t.guideTitle+'</h2>'+
     '<div class="steps">'+
       step(1,'cursor',t.g1t,t.g1s,null,t.open,null,u,'open')+
-      step(2,'app',t.g2t,t.g2s,'pwa',t.guideBtn,null,null,'pwa')+
+      step(2,'app',t.g2t,t.g2s,'pwa',t.guideBtn,t.optional,null,'pwa',t.g2skip)+
       step(3,'printer',t.g3t,t.g3s,'focus',t.guideBtn,null,null,'print')+
       step(4,'key',t.g4t,t.g4s,'autologin',t.guideBtn,t.optional,null,'auto')+
     '</div>'+
     videoBlock()+
     '<h2>'+t.faq+'</h2>'+
+    faqPrint(t)+
     faqZoom(t)+
     det(t.qClip,procClip(t),null,'clip')+
     '<p class="foot">'+t.foot+'</p></div>';
@@ -997,17 +1086,27 @@ function viewExt(t){
 function render(){
   if(!lang){ app.innerHTML = viewLang(); return; }
   var t = T[lang];
-  app.innerHTML = !profile ? viewProfile(t) : (profile==="int" ? viewInt(t) : viewExt(t));
+  app.innerHTML = !profile ? viewProfile(t) : (profile==="ext" ? viewExt(t) : viewInt(t));
   if(app.parentNode) window.scrollTo(0,0);
 }
 function setLang(k){ lang=k; render(); }
-function goProfile(p){ profile=p; render(); }
+function goProfile(p){
+  /* la détection dépend du profil (Chrome imposé en centre intégré) :
+     on la refait, sauf si l'utilisateur a choisi son navigateur à la main */
+  if(!vManual) vBrowser = null;
+  profile = p;
+  render();
+}
 
 /* --- guide : une seule étape ouverte à la fois --- */
 var PROC = { pwa:procPwa, focus:procFocus, autologin:procAuto };
 function toggleStep(key){
   var t = T[lang];
   var el = document.getElementById('step-'+key);
+  /* on referme l'étape précédente : sa hauteur disparaît et la page
+     sauterait. On mémorise la position de l'étape cliquée pour la
+     remettre exactement au même endroit à l'écran. */
+  var before = el.getBoundingClientRect().top;
   var wasOpen = el.classList.contains('open');
   ['pwa','focus','autologin'].forEach(function(k){
     var s = document.getElementById('step-'+k), b = document.getElementById('btn-'+k);
@@ -1021,8 +1120,9 @@ function toggleStep(key){
     document.getElementById('btn-'+key).textContent = t.guideClose;
     el.classList.add('done');
   }
+  var after = el.getBoundingClientRect().top;
+  if(after !== before) window.scrollBy(0, after - before);
 }
-function markDone(id){ var el = document.getElementById(id); if(el) el.classList.add('done'); }
 
 /* --- ouvrir une FAQ / procédure depuis ailleurs (compatibilité) --- */
 function openFaq(id){
@@ -1059,22 +1159,52 @@ function closeZoom(){
 function escZoom(e){ if(e.key === 'Escape') closeZoom(); }
 
 /* --- copier --- */
-function cp(btn){
-  var i = document.getElementById("fx"); i.select();
-  try{ navigator.clipboard.writeText(i.value); }catch(e){ try{ document.execCommand("copy"); }catch(e2){} }
-  flash(btn);
-}
-function cpVal(btn, v){
-  try{ navigator.clipboard.writeText(v); }catch(e){
-    var i=document.createElement('input'); i.value=v; document.body.appendChild(i); i.select();
-    try{ document.execCommand("copy"); }catch(e2){} document.body.removeChild(i);
+function cpVal(btn, v, inputId){
+  /* Dans un embed, l'API presse-papiers peut être bloquée : on tente
+     plusieurs voies, puis on sélectionne le texte pour un Ctrl + C manuel. */
+  var done = false;
+  var ta = document.createElement('textarea');
+  ta.value = v;
+  ta.setAttribute('readonly','');
+  ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;padding:0;border:0;opacity:0';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  ta.setSelectionRange(0, v.length);
+  try{ done = document.execCommand('copy'); }catch(e){ done = false; }
+  document.body.removeChild(ta);
+  if(!done && navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(v).then(function(){ flash(btn, T[lang].copied); },
+      function(){ manualCopy(btn, inputId); });
+    return;
   }
-  flash(btn);
+  if(done) flash(btn, T[lang].copied);
+  else manualCopy(btn, inputId);
 }
-function flash(btn){
-  var old = btn.innerHTML;
-  btn.innerHTML = T[lang].copied;
-  setTimeout(function(){ btn.innerHTML = old; }, 1600);
+function manualCopy(btn, inputId){
+  /* on sélectionne le texte réellement visible pour que Ctrl + C ait un effet :
+     le champ quand il y en a un, sinon l'adresse affichée à côté du bouton */
+  var i = inputId ? document.getElementById(inputId) : null;
+  if(i){ i.focus(); i.select(); i.setSelectionRange(0, i.value.length); flash(btn, T[lang].copyManual); return; }
+  var code = btn && btn.parentNode ? btn.parentNode.querySelector('code') : null;
+  if(code && window.getSelection && document.createRange){
+    var r = document.createRange();
+    r.selectNodeContents(code);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+    flash(btn, T[lang].copyManual);
+    return;
+  }
+  flash(btn, T[lang].copyFail);
+}
+
+function flash(btn, msg){
+  if(!btn) return;
+  if(btn.dataset.orig === undefined) btn.dataset.orig = btn.innerHTML;
+  btn.innerHTML = msg || T[lang].copied;
+  clearTimeout(btn._t);
+  btn._t = setTimeout(function(){ btn.innerHTML = btn.dataset.orig; }, 2400);
 }
 
 /* --- impression d'une procédure --- */
@@ -1100,7 +1230,9 @@ function printProc(key, btn){
     '.ph{border:1px dashed #999;border-radius:6px;padding:12px;margin:10px 0;color:#5A6472;font-size:9.5pt}'+
     '.ph svg{display:none}.ph .f{font-family:monospace;font-size:8.5pt}'+
     '.note{border-left:4px solid #009735;background:#EDF8F0;padding:10px 14px;margin:14px 0;page-break-inside:avoid}'+
-    '.note.warn{border-color:#D9820A;background:#FFF8EC}.note p{margin:0}'+
+    '.note.warn{border-color:#D9820A;background:#FFF8EC}'+
+    '.note.wico p{display:flex;gap:10px;align-items:flex-start}'+
+    '.note.wico .ic{color:#D9820A}.note p{margin:0}'+
     '.duo{display:flex;gap:12px}.copy input{width:100%;font-family:monospace;font-size:9pt;padding:6px;border:1px solid #D8DEE7}'+
     '.copy button,.btn,.cta{display:none}'+
     'kbd{border:1px solid #999;border-radius:3px;padding:0 4px;font-weight:700}'+
