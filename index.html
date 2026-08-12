@@ -332,22 +332,22 @@ var VT = {
   fr:{ open:"Ouvrir Parallels", pwa:"Installer en tant qu'application", print:"Impression",
        auto:"Connexion automatique (Sign & Go)", example:"Exemple",
        title:"Tutoriel vidéo", lead:"La vidéo complète, chapitre par chapitre.", leadEx:"Un exemple d'utilisation en vidéo.",
-       browser:"Votre navigateur", chapters:"Chapitres", noSeek:"Ce lecteur ne peut pas se déplacer dans la vidéo ici. Lancez la lecture et avancez jusqu'à", noPrint:"Le chapitre « Impression » ne vous concerne pas : votre imprimante est déjà configurée.", notFor:"sans objet ici", watch:"Voir la vidéo", close:"Fermer",
+       browser:"Votre navigateur", chapters:"Chapitres", vLoad:"Préparation de la vidéo pour le déplacement…", noSeek:"Ce lecteur ne peut pas se déplacer dans la vidéo ici. Lancez la lecture et avancez jusqu'à", noPrint:"Le chapitre « Impression » ne vous concerne pas : votre imprimante est déjà configurée.", notFor:"sans objet ici", watch:"Voir la vidéo", close:"Fermer",
        deep:"Voir cette étape en vidéo" },
   de:{ open:"Parallels öffnen", pwa:"Als Anwendung installieren", print:"Drucken",
        auto:"Automatische Anmeldung (Sign & Go)", example:"Beispiel",
        title:"Video-Tutorial", lead:"Das komplette Video, Kapitel für Kapitel.", leadEx:"Ein Anwendungsbeispiel im Video.",
-       browser:"Ihr Browser", chapters:"Kapitel", noSeek:"Dieser Player kann hier nicht im Video springen. Starten Sie die Wiedergabe und spulen Sie vor bis", noPrint:"Das Kapitel « Drucken » betrifft Sie nicht: Ihr Drucker ist bereits eingerichtet.", notFor:"hier nicht relevant", watch:"Video ansehen", close:"Schließen",
+       browser:"Ihr Browser", chapters:"Kapitel", vLoad:"Video wird zum Springen vorbereitet…", noSeek:"Dieser Player kann hier nicht im Video springen. Starten Sie die Wiedergabe und spulen Sie vor bis", noPrint:"Das Kapitel « Drucken » betrifft Sie nicht: Ihr Drucker ist bereits eingerichtet.", notFor:"hier nicht relevant", watch:"Video ansehen", close:"Schließen",
        deep:"Diesen Schritt im Video ansehen" },
   nl:{ open:"Parallels openen", pwa:"Installeren als toepassing", print:"Afdrukken",
        auto:"Automatisch inloggen (Sign & Go)", example:"Voorbeeld",
-       title:"Videohandleiding", lead:"De volledige video, kapittel per kapittel.", leadEx:"Een voorbeeld van gebruik in video.",
-       browser:"Uw browser", chapters:"Kapittels", noSeek:"Deze speler kan hier niet in de video springen. Start de video en spoel door naar", noPrint:"Het kapittel « Afdrukken » geldt niet voor u: uw printer is al ingesteld.", notFor:"hier niet van toepassing", watch:"Video bekijken", close:"Sluiten",
+       title:"Videohandleiding", lead:"De volledige video, stap voor stap.", leadEx:"Een voorbeeld van gebruik in video.",
+       browser:"Uw browser", chapters:"Kapittels", vLoad:"Video wordt voorbereid om te kunnen springen…", noSeek:"Deze speler kan hier niet in de video springen. Start de video en spoel door naar", noPrint:"Het kapittel « Afdrukken » geldt niet voor u: uw printer is al ingesteld.", notFor:"hier niet van toepassing", watch:"Video bekijken", close:"Sluiten",
        deep:"Deze stap in de video bekijken" },
   en:{ open:"Open Parallels", pwa:"Install as an application", print:"Printing",
        auto:"Auto-Login (Sign & Go)", example:"Example",
        title:"Video tutorial", lead:"The full video, chapter by chapter.", leadEx:"An example of use, in video.",
-       browser:"Your browser", chapters:"Chapters", noSeek:"This player cannot seek within the video here. Start playback and skip forward to", noPrint:"The « Printing » chapter does not apply to you: your printer is already set up.", notFor:"not needed here", watch:"Watch the video", close:"Close",
+       browser:"Your browser", chapters:"Chapters", vLoad:"Preparing the video for seeking…", noSeek:"This player cannot seek within the video here. Start playback and skip forward to", noPrint:"The « Printing » chapter does not apply to you: your printer is already set up.", notFor:"not needed here", watch:"Watch the video", close:"Close",
        deep:"Watch this step in the video" }
 };
 
@@ -575,7 +575,7 @@ var T = {
   optional:"Optioneel",
   open:"Parallels openen", openSub:"(vervangt Citrix)", portal:"Via dit nieuwe portaal opent u uw applicaties, zoals Focus.", faq:"Veelgestelde vragen",
   addrLbl:"Adres om te openen in Chrome",
-  printBtn:"Deze fiche afdrukken", printedOn:"Afgedrukt op",
+  printBtn:"Dit document afdrukken", printedOn:"Afgedrukt op",
   printBlocked:"Uw browser heeft het openen van de fiche geblokkeerd. Klik op de knop hieronder om hem te openen en druk hem daarna af.", printOpen:"Fiche openen om af te drukken",
   imgSoon:"Schermafbeelding volgt",
   helpTxt:"Werkt het niet? Neem contact op met uw gebruikelijke IT-contactpersoon.",
@@ -877,7 +877,25 @@ function detectBrowser(){
   var ua = navigator.userAgent || "";
   return /Edg\//.test(ua) ? "edge" : "chrome";
 }
-function vsrc(){ return VIDEOS[vBrowser].src; }
+/* Certains hébergeurs (Google Sites, aperçus) ne répondent pas aux requêtes
+   partielles : le navigateur annonce alors seekable = [0,0] et refuse de
+   déplacer le curseur. On charge la vidéo entière en mémoire (blob), qui est
+   toujours déplaçable, et on garde l'URL en cache par navigateur. */
+var VBLOB = {}, VLOADQ = {};
+function vLoadFull(key, done){
+  if(VBLOB[key]){ done(true); return; }
+  if(VLOADQ[key]){ VLOADQ[key].push(done); return; }
+  VLOADQ[key] = [done];
+  var finish = function(ok){
+    var q = VLOADQ[key]; delete VLOADQ[key];
+    q.forEach(function(fn){ fn(ok); });
+  };
+  fetch(VIDEOS[key].src)
+    .then(function(r){ if(!r.ok) throw 0; return r.blob(); })
+    .then(function(b){ VBLOB[key] = URL.createObjectURL(b); finish(true); })
+    .catch(function(){ finish(false); });
+}
+function vsrc(){ return VBLOB[vBrowser] || VIDEOS[vBrowser].src; }
 function videoBlock(){
   var v = VT[lang] || VT.fr;
   if(!vBrowser) vBrowser = detectBrowser();
@@ -922,9 +940,7 @@ function openVideo(){
   el.classList.add('open');
   if(profile === "int"){
     var f = document.getElementById('vplayer');
-    if(f) f.addEventListener('loadedmetadata', function(){
-      try{ f.currentTime = VIDEOS[vBrowser].ch.example; }catch(e){}
-    }, {once:true});
+    if(f) seekTo(f, VIDEOS[vBrowser].ch.example);
   }
   var b = document.getElementById('vbtn');
   if(b) b.textContent = (VT[lang]||VT.fr).close;
@@ -953,20 +969,50 @@ function setBrowser(k){
     if(lbl) lbl.textContent = v.deep+' · '+fmt(sec);
   }
 }
+function vNote(cls, html){
+  var host = document.getElementById('vproc');
+  if(!host) return;
+  var n = host.querySelector('.vseek');
+  if(!n){ n = document.createElement('p'); n.className = 'note vseek'; host.appendChild(n); }
+  n.className = 'note '+cls+' vseek';
+  n.innerHTML = html;
+}
+function vNoteClear(){
+  var n = document.querySelector('#vproc .vseek');
+  if(n) n.remove();
+}
+function vSeekable(f){
+  return f.seekable && f.seekable.length && f.seekable.end(0) > 0;
+}
+function vApply(f, sec){
+  try{
+    f.currentTime = sec;
+    var p = f.play();
+    if(p && p.catch) p.catch(function(){});
+  }catch(e){}
+  vNoteClear();
+}
+function seekTo(f, sec){
+  var run = function(){
+    if(vSeekable(f)){ vApply(f, sec); return; }
+    var v = VT[lang] || VT.fr, key = vBrowser;
+    vNote('', v.vLoad);
+    vLoadFull(key, function(ok){
+      var cur = document.getElementById('vplayer');
+      if(!cur) return;
+      if(!ok){ warnNoSeek(sec); return; }
+      cur.addEventListener('loadedmetadata', function(){ vApply(cur, sec); }, {once:true});
+      cur.src = VBLOB[key];
+      cur.load();
+    });
+  };
+  if(f.readyState >= 1) run();
+  else f.addEventListener('loadedmetadata', run, {once:true});
+}
 function goChapter(sec){
   openVideo();
   var f = document.getElementById('vplayer');
-  if(f){
-    var seek = function(){
-      /* Le déplacement exige un hébergement qui répond aux requêtes partielles
-         (GitHub Pages le fait). Sinon on l'indique au lieu de relire depuis 0. */
-      var ok = f.seekable && f.seekable.length && f.seekable.end(0) > 0;
-      if(!ok){ warnNoSeek(sec); return; }
-      try{ f.currentTime = sec; f.play(); }catch(e){ warnNoSeek(sec); }
-    };
-    if(f.readyState >= 1) seek();
-    else f.addEventListener('loadedmetadata', seek, {once:true});
-  }
+  if(f) seekTo(f, sec);
   var b = document.getElementById('video');
   if(b) window.scrollTo({top:b.getBoundingClientRect().top+window.pageYOffset-60,behavior:'smooth'});
 }
@@ -974,13 +1020,7 @@ function warnNoSeek(sec){
   var v = VT[lang] || VT.fr;
   var host = document.getElementById('vproc');
   if(!host) return;
-  var n = host.querySelector('.vseek');
-  if(!n){
-    n = document.createElement('p');
-    n.className = 'note warn vseek';
-    host.appendChild(n);
-  }
-  n.innerHTML = v.noSeek+' <b>'+fmt(sec)+'</b>.';
+  vNote('warn', v.noSeek+' <b>'+fmt(sec)+'</b>.');
 }
 /* lien discret vers un chapitre, depuis une étape ou une FAQ */
 function vlink(ch){
