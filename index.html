@@ -270,6 +270,9 @@
    ============================================================ */
 var IMG = {
   logo      : "assets/logo_euromaster.png",              // logo Euromaster — page d'accueil + barre du haut
+  loginErr  : "assets/70-focus-erreur-connexion.png",    // fenêtre Focus « Utilisateur ou mot de passe incorrect »
+  multiFocus: "assets/71-focus-plusieurs-instances.png",  // survol de l'icône Focus, liste des fenêtres ouvertes
+  appGrid   : "assets/72-focus-menu-applications.png",    // icône 9 carrés → menu des applications
   pwaIcon   : "assets/00-icone-pwa-parallels-euromaster.png", // icône PWA Parallels
   taskbar   : "assets/01-acces-icone-barre-taches-windows.png",
   zoomIcon  : "assets/icone_zoom.png", // bouton de réglage du zoom
@@ -409,6 +412,32 @@ var T = {
   qClipInt:"Puis-je copier-coller entre Parallels et mes autres applications ?",
   clipInt:"Oui. L'autorisation est déjà active sur votre poste, PC comme Chromebox. Vous n'avez aucun réglage à faire.",
 
+  qFullscreen:"Pourquoi mon application n'est plus en plein écran ?",
+  fullscreenP1:"Avec Parallels, tout se passe maintenant à travers Chrome (ou Edge) : la barre d'adresse et les onglets prennent forcément un peu de place en haut de l'écran, ce que vous n'aviez pas avec Citrix.",
+  fullscreenP2:"Pour retrouver le maximum d'espace, installez Parallels comme une application (voir l'étape « Installer comme une application » plus haut) : la barre d'adresse et les onglets disparaissent, et l'écran est beaucoup plus dégagé.",
+  fullscreenP2Int:"Sur votre poste, Parallels est déjà installé comme une application : ouvrez-le depuis l'icône de votre barre des tâches, pas depuis une page dans Chrome, pour profiter du maximum d'espace.",
+  qCitrix:"Puis-je encore utiliser Citrix ?",
+  citrixP1:"Non, l'accès Citrix a été fermé. Son éditeur a fortement augmenté ses tarifs, et nous avons choisi de passer sur Parallels, un concurrent direct, plus moderne et proposé à un tarif plus avantageux.",
+  citrixP2:"Cela nous permet aussi de faire fonctionner vos applications directement depuis le navigateur, sur tous les appareils, sans installer de logiciel spécifique. Nous travaillons notamment à proposer Focus sur tablette dans les prochains mois : si vous en avez besoin, faites-le nous savoir.",
+
+  qLogin:"Focus affiche « Utilisateur ou mot de passe incorrect »",
+  loginErr:"Ce message ne veut pas dire que Focus est en panne : il signifie que le nom d'utilisateur ou le mot de passe saisi n'est pas le bon. Vérifiez votre identifiant, votre mot de passe et le code centre, puis réessayez.",
+  loginErrCap:"Ce message d'erreur apparaît dans une seconde fenêtre, au-dessus de la fenêtre de connexion.",
+
+  qMulti:"Puis-je ouvrir plusieurs fenêtres Focus en même temps ?",
+  multiP1:"Oui. Vous pouvez ouvrir plusieurs instances de Focus dans la même session Parallels, par exemple pour vous connecter avec des utilisateurs différents.",
+  multiP2:"Elles se retrouvent toutes derrière la même icône Focus, dans la barre du bas. Passez la souris sur l'icône : la liste des fenêtres ouvertes apparaît, avec leur titre.",
+  multiCap:"Passez la souris sur l'icône Focus pour retrouver toutes les fenêtres ouvertes.",
+  qAppGrid:"Comment revenir au menu des applications, ou en ouvrir une autre ?",
+  appGridP1:"Cliquez sur l'icône à 9 carrés, dans la barre du bas. Elle rouvre le menu des applications, où vous pouvez en choisir une autre.",
+  appGridP2:"Chaque application ouverte vient s'ajouter à côté des autres, dans la barre du bas — un peu comme un second bureau. Vous les retrouvez toutes là, et vous passez de l'une à l'autre en cliquant sur leur icône.",
+  appGridCap:"Le carré à 9 cases rouvre le menu des applications.",
+
+  roamLink:"Vous changez souvent de centre ? →",
+  roamLead:"Vous êtes itinérant et changez souvent de centre : suivez cette page plutôt que celle de votre centre habituel.",
+  roamPrintT:"Imprimer sans installation", roamPrintS:"2X Universal Printer, bac 1, à chaque fois.",
+  roamPrintP:"Comme vous changez souvent de centre, n'installez pas Focus Impression : il faudrait le reconfigurer à chaque déplacement. Dans la fenêtre d'impression de Focus, choisissez toujours <b>2X Universal Printer</b>, puis le <b>bac 1</b>, quel que soit le centre où vous vous trouvez.",
+
   qPwa:"Installer Parallels comme une application (5 minutes)",
   pwaEdgeStep:"Cliquez sur les 3 petits points <kbd>⋮</kbd> en haut à droite d'Edge, puis sur <b>Outils supplémentaires</b>, puis sur <b>Applications</b>, puis sur <b>Installer ce site en tant qu'application</b>.",
   pwaWhy:"Ce que vous gagnez à l'installer en tant qu'application : plus de barre d'adresse ni d'onglets, un accès direct depuis la barre des tâches, un écran plus dégagé.",
@@ -502,6 +531,33 @@ var T = {
 
   qClipInt:"Kann ich zwischen Parallels und meinen anderen Anwendungen kopieren und einfügen?",
   clipInt:"Ja. Die Berechtigung ist auf Ihrem Rechner bereits aktiv, auf PC wie auf Chromebox. Sie müssen nichts einstellen.",
+
+  qFullscreen:"Warum ist meine Anwendung nicht mehr im Vollbildmodus?",
+  fullscreenP1:"Mit Parallels läuft jetzt alles über Chrome (oder Edge): Die Adressleiste und die Tabs nehmen dadurch etwas Platz am oberen Bildschirmrand ein, was bei Citrix nicht der Fall war.",
+  fullscreenP2:"Um wieder mehr Platz zu haben, installieren Sie Parallels als Anwendung (siehe den Schritt „Als Anwendung installieren“ weiter oben): Die Adressleiste und die Tabs verschwinden, und der Bildschirm ist viel aufgeräumter.",
+  fullscreenP2Int:"Auf Ihrem Rechner ist Parallels bereits als Anwendung installiert: öffnen Sie es über das Symbol in Ihrer Taskleiste, nicht über eine Seite in Chrome, um den maximalen Platz zu nutzen.",
+
+  qCitrix:"Kann ich weiterhin Citrix nutzen?",
+  citrixP1:"Nein, der Zugang über Citrix wurde beendet. Der Hersteller hat seine Preise deutlich erhöht, und wir haben uns für Parallels entschieden, einen direkten Wettbewerber, der moderner und zu einem günstigeren Preis angeboten wird.",
+  citrixP2:"Dadurch laufen Ihre Anwendungen jetzt direkt über den Browser, auf allen Geräten, ohne eine bestimmte Software zu installieren. Wir arbeiten unter anderem daran, Focus in den kommenden Monaten auch auf Tablets anzubieten: Wenn Sie das benötigen, lassen Sie es uns wissen.",
+
+  qLogin:"Focus zeigt „Benutzer oder Passwort falsch“ an",
+  loginErr:"Diese Meldung bedeutet nicht, dass Focus nicht funktioniert: Der eingegebene Benutzername oder das Passwort ist falsch. Überprüfen Sie Benutzername, Passwort und Centre-Code und versuchen Sie es erneut.",
+  loginErrCap:"Diese Fehlermeldung erscheint in einem zweiten Fenster, über dem Anmeldefenster.",
+
+  qMulti:"Kann ich mehrere Focus-Fenster gleichzeitig öffnen?",
+  multiP1:"Ja. Sie können mehrere Focus-Instanzen in derselben Parallels-Sitzung öffnen, zum Beispiel um eine Suche offen zu lassen, während Sie an anderer Stelle arbeiten.",
+  multiP2:"Sie sammeln sich alle hinter demselben Focus-Symbol in der unteren Leiste. Fahren Sie mit der Maus über das Symbol: Die Liste der geöffneten Fenster erscheint mit ihrem Titel.",
+  multiCap:"Fahren Sie mit der Maus über das Focus-Symbol, um alle geöffneten Fenster zu sehen.",
+  qAppGrid:"Wie komme ich zum Anwendungsmenü zurück, oder öffne ich eine weitere Anwendung?",
+  appGridP1:"Klicken Sie auf das Symbol mit den 9 Kacheln neben Focus. Es öffnet erneut das Anwendungsmenü, in dem Sie eine weitere Anwendung wählen können.",
+  appGridP2:"Jede geöffnete Anwendung reiht sich in der unteren Leiste neben den anderen ein — etwas wie ein zweiter Schreibtisch. Sie finden dort alle wieder und wechseln zwischen ihnen, indem Sie auf ihr Symbol klicken.",
+  appGridCap:"Das Symbol mit den 9 Kacheln öffnet erneut das Anwendungsmenü.",
+
+  roamLink:"Wechseln Sie oft das Center? →",
+  roamLead:"Sie sind viel unterwegs und wechseln oft das Center: Folgen Sie dieser Seite statt der Ihres gewohnten Centers.",
+  roamPrintT:"Drucken ohne Installation", roamPrintS:"2X Universal Printer, Fach 1, jedes Mal.",
+  roamPrintP:"Da Sie häufig das Center wechseln, installieren Sie Focus Impression nicht: Sie müssten es bei jedem Wechsel neu konfigurieren. Wählen Sie im Druckfenster von Focus immer <b>2X Universal Printer</b> und dann <b>Fach 1</b>, unabhängig davon, in welchem Center Sie sich befinden.",
 
   qPwa:"Parallels als Anwendung installieren (5 Minuten)",
   pwaEdgeStep:"Klicken Sie auf die drei Punkte <kbd>⋮</kbd> oben rechts in Edge, dann auf <b>Weitere Tools</b>, dann auf <b>Apps</b>, dann auf <b>Diese Website als App installieren</b>.",
@@ -597,6 +653,33 @@ var T = {
   qClipInt:"Kan ik kopiëren en plakken tussen Parallels en mijn andere applicaties?",
   clipInt:"Ja. De toestemming staat al aan op uw pc, zowel pc als Chromebox. U hoeft niets in te stellen.",
 
+  qFullscreen:"Waarom staat mijn applicatie niet meer op volledig scherm?",
+  fullscreenP1:"Met Parallels verloopt alles nu via Chrome (of Edge): de adresbalk en de tabbladen nemen daardoor wat ruimte in boven aan het scherm, wat u bij Citrix niet had.",
+  fullscreenP2:"Om weer zoveel mogelijk ruimte te krijgen, installeert u Parallels als applicatie (zie de stap 'Installeren als applicatie' hierboven): de adresbalk en de tabbladen verdwijnen, en het scherm is veel rustiger.",
+  fullscreenP2Int:"Op uw pc is Parallels al geïnstalleerd als applicatie: open het via het pictogram in uw taakbalk, niet via een pagina in Chrome, om zoveel mogelijk ruimte te hebben.",
+
+  qCitrix:"Kan ik nog Citrix gebruiken?",
+  citrixP1:"Nee, de toegang via Citrix is stopgezet. De leverancier heeft de tarieven flink verhoogd, en wij hebben gekozen voor Parallels, een directe concurrent die moderner is en tegen een gunstiger tarief wordt aangeboden.",
+  citrixP2:"Hierdoor werken uw applicaties nu rechtstreeks vanuit de browser, op alle apparaten, zonder specifieke software te installeren. We werken er onder meer aan om Focus de komende maanden ook op tablet aan te bieden: laat het ons weten als u dit nodig heeft.",
+
+  qLogin:"Focus toont ‘Gebruiker of wachtwoord onjuist’",
+  loginErr:"Dit bericht betekent niet dat Focus niet werkt: de ingevoerde gebruikersnaam of het wachtwoord is onjuist. Controleer uw gebruikersnaam, wachtwoord en centrumcode, en probeer het opnieuw.",
+  loginErrCap:"Deze foutmelding verschijnt in een tweede venster, boven het inlogvenster.",
+
+  qMulti:"Kan ik meerdere Focus-vensters tegelijk openen?",
+  multiP1:"Ja. U kunt meerdere Focus-instanties openen in dezelfde Parallels-sessie, bijvoorbeeld om een zoekopdracht open te houden terwijl u elders werkt.",
+  multiP2:"Ze verzamelen zich allemaal achter hetzelfde Focus-pictogram, in de balk onderaan. Beweeg de muis over het pictogram: de lijst met geopende vensters verschijnt, met hun titel.",
+  multiCap:"Beweeg de muis over het Focus-pictogram om alle geopende vensters terug te vinden.",
+  qAppGrid:"Hoe kom ik terug bij het applicatiemenu, of open ik een andere applicatie?",
+  appGridP1:"Klik op het pictogram met de 9 vakjes naast Focus. Dat opent opnieuw het applicatiemenu, waar u een andere applicatie kunt kiezen.",
+  appGridP2:"Elke geopende applicatie komt erbij in de balk onderaan, naast de andere — een soort tweede bureaublad. U vindt ze daar allemaal terug en wisselt tussen ze door op hun pictogram te klikken.",
+  appGridCap:"Het vakje met de 9 stipjes opent opnieuw het applicatiemenu.",
+
+  roamLink:"Wisselt u vaak van vestiging? →",
+  roamLead:"U bent onderweg en wisselt vaak van vestiging: volg deze pagina in plaats van die van uw vaste vestiging.",
+  roamPrintT:"Afdrukken zonder installatie", roamPrintS:"2X Universal Printer, lade 1, elke keer.",
+  roamPrintP:"Omdat u vaak van vestiging wisselt, installeert u Focus Impression niet: u zou het bij elke verplaatsing opnieuw moeten instellen. Kies in het printvenster van Focus altijd <b>2X Universal Printer</b> en vervolgens <b>lade 1</b>, in welke vestiging u ook bent.",
+
   qPwa:"Parallels als applicatie installeren (5 minuten)",
   pwaEdgeStep:"Klik op de drie puntjes <kbd>⋮</kbd> rechtsboven in Edge, dan op <b>Extra hulpmiddelen</b>, dan op <b>Apps</b>, dan op <b>Deze site installeren als app</b>.",
   pwaWhy:"Wat u wint door het als toepassing te installeren: geen adresbalk en tabbladen meer, directe toegang vanuit de taakbalk, een rustiger scherm.",
@@ -690,6 +773,33 @@ var T = {
 
   qClipInt:"Can I copy and paste between Parallels and my other applications?",
   clipInt:"Yes. The permission is already active on your computer, PC and Chromebox alike. There is nothing to set up.",
+
+  qFullscreen:"Why isn't my application full screen anymore?",
+  fullscreenP1:"With Parallels, everything now runs through Chrome (or Edge): the address bar and tabs take up a bit of space at the top of the screen, which you didn't have with Citrix.",
+  fullscreenP2:"To get back the most space, install Parallels as an application (see the “Install as an application” step above): the address bar and tabs disappear, and the screen is much clearer.",
+  fullscreenP2Int:"On your computer, Parallels is already installed as an application: open it from the icon in your taskbar, not from a page in Chrome, to get the most space.",
+
+  qCitrix:"Can I still use Citrix?",
+  citrixP1:"No, Citrix access has been discontinued. Its vendor raised its prices significantly, and we chose to move to Parallels, a direct competitor that is more modern and offered at a better price.",
+  citrixP2:"This also means your applications now run directly through the browser, on any device, without installing specific software. We are working on offering Focus on tablet in the coming months, among other things: let us know if you need this.",
+
+  qLogin:"Focus shows “Incorrect user or password”",
+  loginErr:"This message does not mean Focus is broken: the username or password you entered is not correct. Check your username, password and centre code, then try again.",
+  loginErrCap:"This error appears in a second window, above the sign-in window.",
+
+  qMulti:"Can I open several Focus windows at the same time?",
+  multiP1:"Yes. You can open several Focus instances in the same Parallels session, for example to keep a search open while you work elsewhere.",
+  multiP2:"They all collect behind the same Focus icon in the bottom bar. Hover over the icon: the list of open windows appears, with their titles.",
+  multiCap:"Hover over the Focus icon to find all your open windows.",
+  qAppGrid:"How do I get back to the application menu, or open another one?",
+  appGridP1:"Click the 9-square icon next to Focus. It reopens the application menu, where you can choose another one.",
+  appGridP2:"Every application you open joins the others in the bottom bar — a bit like a second desktop. You find them all there and switch between them by clicking their icon.",
+  appGridCap:"The 9-square icon reopens the application menu.",
+
+  roamLink:"Do you often change centre? →",
+  roamLead:"You travel between centres often: follow this page instead of the one for your usual centre.",
+  roamPrintT:"Printing without installation", roamPrintS:"2X Universal Printer, tray 1, every time.",
+  roamPrintP:"Since you change centres often, do not install Focus Impression: you would need to reconfigure it every time. In Focus's print window, always choose <b>2X Universal Printer</b>, then <b>tray 1</b>, whichever centre you are in.",
 
   qPwa:"Install Parallels as an application (5 minutes)",
   pwaEdgeStep:"Click the 3 dots <kbd>⋮</kbd> at the top right of Edge, then <b>More tools</b>, then <b>Apps</b>, then <b>Install this site as an app</b>.",
@@ -858,6 +968,21 @@ function faqPrint(t){
     '<div class="note"><p><b>'+t.prNo+'</b><br>'+t.prNoP+'</p>'+
     '<p class="small" style="margin:8px 0 0">'+t.prTip+'</p></div>';
   return det(t.qPrint, b+vlink('print')+help(t), null, 'printer');
+}
+function faqFullscreen(t, p2){
+  return det(t.qFullscreen, '<p>'+t.fullscreenP1+'</p><p>'+(p2||t.fullscreenP2)+'</p>', null, 'desktop');
+}
+function faqLogin(t){
+  return det(t.qLogin, '<p>'+t.loginErr+'</p>'+figA(IMG.loginErr, t.loginErrCap), null, 'key');
+}
+function faqCitrix(t){
+  return det(t.qCitrix, '<p>'+t.citrixP1+'</p><p>'+t.citrixP2+'</p>', null, 'globe');
+}
+function faqMulti(t){
+  return det(t.qMulti, '<p>'+t.multiP1+'</p><p>'+t.multiP2+'</p>'+figA(IMG.multiFocus, t.multiCap), null, 'app');
+}
+function faqAppGrid(t){
+  return det(t.qAppGrid, '<p>'+t.appGridP1+'</p><p>'+t.appGridP2+'</p>'+figA(IMG.appGrid, t.appGridCap), null, 'app');
 }
 function faqZoom(t){
   var b = '<p>'+t.zoomP1+'</p><p>'+t.zoomP2+'</p><p>'+t.zoomP3+'</p>'+
@@ -1067,6 +1192,7 @@ function viewProfile(t){
         '<span class="grp grpx">'+t.grpEx+'</span>'+
         '<b>'+t.pickExt+'</b><span>'+t.pickExtSub+'</span><span class="go">'+t.choose+' →</span></button>'+
     '</div>'+
+    '<p class="small" style="text-align:center;margin:22px 0 -4px"><a href="javascript:void(0)" onclick="goProfile(\'roam\')">'+t.roamLink+'</a></p>'+
     det(t.dunno, t.dunnoBody.map(function(p){return '<p>'+p+'</p>';}).join(""))+
     '<p class="foot">'+t.foot+'</p></div>';
 }
@@ -1093,11 +1219,16 @@ function viewInt(t){
       '</div>' : '')+
     videoBlock()+
     '<h2>'+t.faq+'</h2>'+
+    faqFullscreen(t, t.fullscreenP2Int)+
     faqZoom(t)+
+    faqMulti(t)+
+    faqAppGrid(t)+
     det(t.qAutoUse,'<p>'+t.autoUse1+'</p><p>'+(profile==="bo"?t.autoUse2Bo:t.autoUse2)+'</p>'+fig(IMG.autologinLook)+
       help(t),null,'key')+
     (profile==="bo" ? det(t.qAutoInst, procAuto(t), null, 'key') : '')+
     det(t.qClipInt,'<p>'+t.clipInt+'</p>',null,'clip')+
+    faqLogin(t)+
+    faqCitrix(t)+
     '<p class="foot">'+t.foot+'</p></div>';
 }
 
@@ -1111,6 +1242,28 @@ function step(n, icon, title, sub, key, btn, tag, cta, ch, hint){
   h += '</div>';
   if(key) h += '<div class="proc" id="proc-'+key+'"></div>';
   return h+'</div>';
+}
+
+function viewRoam(t){
+  var u = U[lang].ext;
+  return bar(t)+'<div class="wrap"><h1 style="margin-top:24px">'+t.extH1+' <i class="sub">'+t.openSub+'</i></h1>'+
+    '<p class="portal">'+t.portal+'</p><p class="lead">'+t.roamLead+'</p>'+
+    addrBlock(t,u)+
+    '<h2>'+t.guideTitle+'</h2>'+
+    '<div class="steps">'+
+      step(1,'cursor',t.g1t,t.g1s,null,t.open,null,u,'open')+
+      step(2,'app',t.g2t,t.g2s,'pwa',t.guideBtn,t.optional,null,'pwa',t.g2skip)+
+      step(3,'printer',t.roamPrintT,t.roamPrintS,null,null,null,null,null)+
+      step(4,'key',t.g4t,t.g4s,'autologin',t.guideBtn,t.optional,null,'auto')+
+    '</div>'+
+    '<div class="note ok" style="margin:-6px 0 28px"><p>'+t.roamPrintP+'</p></div>'+
+    videoBlock()+
+    '<h2>'+t.faq+'</h2>'+
+    faqZoom(t)+
+    det(t.qClip,procClip(t),null,'clip')+
+    faqLogin(t)+
+    faqCitrix(t)+
+    '<p class="foot">'+t.foot+'</p></div>';
 }
 
 function viewExt(t){
@@ -1128,15 +1281,20 @@ function viewExt(t){
     videoBlock()+
     '<h2>'+t.faq+'</h2>'+
     faqPrint(t)+
+    faqFullscreen(t)+
     faqZoom(t)+
+    faqMulti(t)+
+    faqAppGrid(t)+
     det(t.qClip,procClip(t),null,'clip')+
+    faqLogin(t)+
+    faqCitrix(t)+
     '<p class="foot">'+t.foot+'</p></div>';
 }
 
 function render(){
   if(!lang){ app.innerHTML = viewLang(); return; }
   var t = T[lang];
-  app.innerHTML = !profile ? viewProfile(t) : (profile==="ext" ? viewExt(t) : viewInt(t));
+  app.innerHTML = !profile ? viewProfile(t) : (profile==="ext" ? viewExt(t) : profile==="roam" ? viewRoam(t) : viewInt(t));
   if(app.parentNode) window.scrollTo(0,0);
 }
 function setLang(k){ lang=k; render(); }
