@@ -292,6 +292,7 @@ var IMG = {
   printWin  : "assets/60-impression-fenetre-focus.png", // fenêtre d'impression de Focus
   taskbarBo : "assets/02-icone-barre-taches-backoffice.png", // icône dans la barre des tâches, back office
   iconBo    : "assets/02b-icone-backoffice-zoom.png",        // la même icône, agrandie
+  pinStart  : "assets/90-menu-demarrer-myapps-epingler.png", // menu Démarrer : myapps → épingler
 
   focusStoreBtn: ""  // libre : autre capture du Chrome Web Store si besoin
 };
@@ -375,8 +376,16 @@ var T = {
   intH1:"Cliquez sur l'icône Parallels",
   intLead:"L'icône est déjà dans votre barre des tâches, en bas de l'écran. Un clic, et Parallels s'ouvre. C'est tout.",
   intIconCaption:"Voici à quoi ressemble l'icône à repérer :",
-  intOk:"<b>Rien à installer.</b> Votre Chromebox est déjà configurée.",
-  intOkBo:"<b>L'accès est déjà configuré sur votre poste.</b> L'extension AutoLogin, elle, est à installer si vous en avez besoin.",
+  intOk:"<b>Rien à installer pour accéder à Parallels.</b> Votre Chromebox est déjà configurée. L'extension AutoLogin, elle, est à installer si vous en avez besoin.",
+  intOkBo:"<b>L'accès est déjà configuré sur votre poste.</b> Il ne vous reste qu'à épingler l'icône, et à installer l'extension AutoLogin si vous en avez besoin.",
+  pinH1:"Épinglez MyApps à votre barre des tâches",
+  pinLead:"L'icône n'est pas encore sur votre poste : vous l'ajoutez vous-même, une seule fois, en trois clics. Ensuite, Parallels s'ouvre d'un clic depuis le bas de votre écran.",
+  pinS1:"Cliquez sur le bouton Windows, en bas à gauche de l'écran.",
+  pinS2:"Tapez <b>myapps</b>. L'application <b>MyApps</b> apparaît en haut de la liste, sous « Meilleure correspondance ».",
+  pinS3:"Dans le panneau de droite, cliquez sur <b>Épingler à la barre des tâches</b>.",
+  pinCap:"Les trois clics, dans l'ordre.",
+  pinNote:"Sur la capture ci-dessus, l'icône est déjà épinglée : la ligne indique donc « Détacher de la barre des tâches ». Sur votre poste, elle indiquera « Épingler à la barre des tâches ».",
+  fullscreenP2Bo:"Pour retrouver le maximum d'espace, installez Parallels comme une application : la procédure est juste en dessous, « Installer Parallels comme une application ».",
   intNoIcon:"Pas d'icône ?", intNoIconP:"Ouvrez Chrome et allez à cette adresse :",
   intSame:"L'icône et l'adresse mènent exactement au même endroit.",
   envH:"Production et non-production", envProd:"Production", envProdP:"L'environnement de travail quotidien. C'est celui qui s'ouvre avec l'icône de votre barre des tâches.",
@@ -443,6 +452,7 @@ var T = {
   pwaWhy:"Ce que vous gagnez à l'installer en tant qu'application : plus de barre d'adresse ni d'onglets, un accès direct depuis la barre des tâches, un écran plus dégagé.",
   pwaBeforeCap:"Avant, dans le navigateur", pwaAfterCap:"Après, en application",
   pwaS1:"Ouvrez Parallels avec le bouton jaune de l'étape 1.",
+  pwaS1Bo:"Ouvrez Parallels avec le bouton jaune « Ouvrir Parallels », plus haut sur cette page.",
   pwaS2:"Cliquez sur les 3 points <kbd>⋮</kbd> en haut à droite de Chrome, puis sur <b>Caster, enregistrer et partager</b>, puis sur <b>Installer la page en tant qu'appli…</b>",
   pwaS3:"Une fenêtre s'ouvre. Cliquez sur <b>Installer</b>.",
   pwaS4:"Repérez l'icône Parallels dans votre barre des tâches (la barre tout en bas de l'écran, où se trouve l'heure), faites un <b>clic droit</b> dessus, puis cliquez sur <b>Épingler à la barre des tâches</b>.",
@@ -495,8 +505,16 @@ var T = {
   intH1:"Klicken Sie auf das Parallels-Symbol",
   intLead:"Das Symbol ist bereits in Ihrer Taskleiste am unteren Bildschirmrand. Ein Klick, und Parallels öffnet sich. Das ist alles.",
   intIconCaption:"So sieht das Symbol aus, das Sie suchen müssen:",
-  intOk:"<b>Nichts zu installieren.</b> Ihre Chromebox ist bereits eingerichtet.",
-  intOkBo:"<b>Der Zugang ist auf Ihrem Rechner bereits eingerichtet.</b> Die Erweiterung AutoLogin müssen Sie bei Bedarf selbst installieren.",
+  intOk:"<b>Für den Zugang zu Parallels ist nichts zu installieren.</b> Ihre Chromebox ist bereits eingerichtet. Die Erweiterung AutoLogin müssen Sie bei Bedarf selbst installieren.",
+  intOkBo:"<b>Der Zugang ist auf Ihrem Rechner bereits eingerichtet.</b> Sie müssen nur noch das Symbol anheften und die Erweiterung AutoLogin installieren, wenn Sie sie brauchen.",
+  pinH1:"Heften Sie MyApps an Ihre Taskleiste",
+  pinLead:"Das Symbol ist noch nicht auf Ihrem Rechner: Sie fügen es selbst hinzu, einmalig, mit drei Klicks. Danach öffnet sich Parallels mit einem Klick am unteren Bildschirmrand.",
+  pinS1:"Klicken Sie auf die Windows-Schaltfläche unten links am Bildschirm.",
+  pinS2:"Tippen Sie <b>myapps</b>. Die Anwendung <b>MyApps</b> erscheint oben in der Liste unter „Beste Übereinstimmung“.",
+  pinS3:"Klicken Sie im rechten Bereich auf <b>An Taskleiste anheften</b>.",
+  pinCap:"Die drei Klicks, in dieser Reihenfolge.",
+  pinNote:"Auf dem Bild oben ist das Symbol schon angeheftet, daher steht dort „Von Taskleiste lösen“. Auf Ihrem Rechner steht „An Taskleiste anheften“.",
+  fullscreenP2Bo:"Um wieder mehr Platz zu haben, installieren Sie Parallels als Anwendung: die Anleitung finden Sie direkt darunter, „Parallels als Anwendung installieren“.",
   intNoIcon:"Kein Symbol?", intNoIconP:"Öffnen Sie Chrome und rufen Sie diese Adresse auf:",
   intSame:"Symbol und Adresse führen genau an dieselbe Stelle.",
   envH:"Produktion und Nicht-Produktion", envProd:"Produktion", envProdP:"Die tägliche Arbeitsumgebung. Sie öffnet sich über das Symbol in Ihrer Taskleiste.",
@@ -564,6 +582,7 @@ var T = {
   pwaWhy:"Was Ihnen die Installation als Anwendung bringt: keine Adressleiste und keine Tabs mehr, direkter Zugriff über die Taskleiste, ein aufgeräumterer Bildschirm.",
   pwaBeforeCap:"Vorher, im Browser", pwaAfterCap:"Nachher, als Anwendung",
   pwaS1:"Öffnen Sie Parallels mit der gelben Schaltfläche in Schritt 1.",
+  pwaS1Bo:"Öffnen Sie Parallels mit der gelben Schaltfläche „Parallels öffnen“ weiter oben auf dieser Seite.",
   pwaS2:"Klicken Sie auf die drei Punkte <kbd>⋮</kbd> oben rechts in Chrome, dann auf <b>Übertragen, speichern und teilen</b>, dann auf <b>Seite als App installieren…</b>",
   pwaS3:"Ein Fenster öffnet sich. Klicken Sie auf <b>Installieren</b>.",
   pwaS4:"Suchen Sie das Parallels-Symbol in Ihrer Taskleiste (die Leiste ganz unten am Bildschirm, wo die Uhrzeit steht), klicken Sie mit der <b>rechten Maustaste</b> darauf und dann auf <b>An Taskleiste anheften</b>.",
@@ -616,8 +635,16 @@ var T = {
   intH1:"Klik op het Parallels-pictogram",
   intLead:"Het pictogram staat al in uw taakbalk, onderaan het scherm. Eén klik en Parallels opent. Dat is alles.",
   intIconCaption:"Zo ziet het pictogram eruit dat u moet zoeken:",
-  intOk:"<b>Niets te installeren.</b> Uw Chromebox is al ingesteld.",
-  intOkBo:"<b>De toegang is al ingesteld op uw pc.</b> De extensie AutoLogin installeert u zelf als u die nodig hebt.",
+  intOk:"<b>Niets te installeren om Parallels te openen.</b> Uw Chromebox is al ingesteld. De extensie AutoLogin installeert u zelf als u die nodig hebt.",
+  intOkBo:"<b>De toegang is al ingesteld op uw pc.</b> U hoeft alleen nog het pictogram vast te maken, en de extensie AutoLogin te installeren als u die nodig hebt.",
+  pinH1:"Maak MyApps vast aan uw taakbalk",
+  pinLead:"Het pictogram staat nog niet op uw pc: u voegt het zelf toe, één keer, met drie klikken. Daarna opent Parallels met één klik onderaan uw scherm.",
+  pinS1:"Klik op de Windows-knop, linksonder op het scherm.",
+  pinS2:"Typ <b>myapps</b>. De applicatie <b>MyApps</b> verschijnt bovenaan de lijst, onder 'Beste overeenkomst'.",
+  pinS3:"Klik in het rechterpaneel op <b>Aan de taakbalk vastmaken</b>.",
+  pinCap:"De drie klikken, in deze volgorde.",
+  pinNote:"Op de afbeelding hierboven is het pictogram al vastgemaakt, daarom staat er 'Van de taakbalk losmaken'. Op uw pc staat er 'Aan de taakbalk vastmaken'.",
+  fullscreenP2Bo:"Om weer zoveel mogelijk ruimte te krijgen, installeert u Parallels als applicatie: de procedure staat er net onder, 'Parallels als applicatie installeren'.",
   intNoIcon:"Geen pictogram?", intNoIconP:"Open Chrome en ga naar dit adres:",
   intSame:"Het pictogram en het adres leiden naar precies dezelfde plek.",
   envH:"Productie en niet-productie", envProd:"Productie", envProdP:"De dagelijkse werkomgeving. Die opent met het pictogram in uw taakbalk.",
@@ -685,6 +712,7 @@ var T = {
   pwaWhy:"Wat u wint door het als toepassing te installeren: geen adresbalk en tabbladen meer, directe toegang vanuit de taakbalk, een rustiger scherm.",
   pwaBeforeCap:"Voor, in de browser", pwaAfterCap:"Na, als applicatie",
   pwaS1:"Open Parallels met de gele knop bij stap 1.",
+  pwaS1Bo:"Open Parallels met de gele knop 'Parallels openen', hoger op deze pagina.",
   pwaS2:"Klik op de drie puntjes <kbd>⋮</kbd> rechtsboven in Chrome, dan op <b>Casten, opslaan en delen</b>, dan op <b>Pagina installeren als app…</b>",
   pwaS3:"Er verschijnt een venster. Klik op <b>Installeren</b>.",
   pwaS4:"Zoek het Parallels-pictogram in uw taakbalk (de balk helemaal onderaan het scherm, waar de tijd staat), klik er met de <b>rechtermuisknop</b> op en klik dan op <b>Vastmaken aan taakbalk</b>.",
@@ -737,8 +765,16 @@ var T = {
   intH1:"Click the Parallels icon",
   intLead:"The icon is already in your taskbar, at the bottom of the screen. One click and Parallels opens. That's all.",
   intIconCaption:"This is what the icon looks like:",
-  intOk:"<b>Nothing to install.</b> Your Chromebox is already set up.",
-  intOkBo:"<b>Access is already set up on your computer.</b> The AutoLogin extension, however, is yours to install if you need it.",
+  intOk:"<b>Nothing to install to reach Parallels.</b> Your Chromebox is already set up. The AutoLogin extension, however, is yours to install if you need it.",
+  intOkBo:"<b>Access is already set up on your computer.</b> All that is left is to pin the icon, and to install the AutoLogin extension if you need it.",
+  pinH1:"Pin MyApps to your taskbar",
+  pinLead:"The icon is not on your computer yet: you add it yourself, once, in three clicks. After that, Parallels opens in one click from the bottom of your screen.",
+  pinS1:"Click the Windows button at the bottom left of the screen.",
+  pinS2:"Type <b>myapps</b>. The <b>MyApps</b> application appears at the top of the list, under “Best match”.",
+  pinS3:"In the panel on the right, click <b>Pin to taskbar</b>.",
+  pinCap:"The three clicks, in order.",
+  pinNote:"In the picture above the icon is already pinned, so the line reads “Unpin from taskbar”. On your computer it will read “Pin to taskbar”.",
+  fullscreenP2Bo:"To get back the most space, install Parallels as an application: the procedure is just below, “Install Parallels as an application”.",
   intNoIcon:"No icon?", intNoIconP:"Open Chrome and go to this address:",
   intSame:"The icon and the address take you to exactly the same place.",
   envH:"Production and non-production", envProd:"Production", envProdP:"The day-to-day working environment. This is what opens from the icon in your taskbar.",
@@ -806,6 +842,7 @@ var T = {
   pwaWhy:"What you gain by installing it as an application: no more address bar or tabs, direct access from the taskbar, a clearer screen.",
   pwaBeforeCap:"Before, in the browser", pwaAfterCap:"After, as an application",
   pwaS1:"Open Parallels with the yellow button in step 1.",
+  pwaS1Bo:"Open Parallels with the yellow “Open Parallels” button higher up on this page.",
   pwaS2:"Click the 3 dots <kbd>⋮</kbd> at the top right of Chrome, then <b>Cast, save and share</b>, then <b>Install page as app…</b>",
   pwaS3:"A window opens. Click <b>Install</b>.",
   pwaS4:"Find the Parallels icon in your taskbar (the bar right at the bottom of the screen, where the time is), <b>right-click</b> it, then click <b>Pin to taskbar</b>.",
@@ -927,7 +964,7 @@ function procPwa(t){
     '<p>'+t.pwaWhy+'</p>'+
     '<div class="duo">'+figA(IMG.pwaBefore,t.pwaBeforeCap)+
       figA(IMG.pwaAfter,t.pwaAfterCap)+'</div>'+
-    ol([t.pwaS1,
+    ol([(profile==="bo" ? t.pwaS1Bo : t.pwaS1),
         stepTxt+stepImg,
         t.pwaS3+figA(IMG.pwaConfirm),
         t.pwaS4+figA(IMG.pwaPin)])+
@@ -983,6 +1020,16 @@ function faqMulti(t){
 }
 function faqAppGrid(t){
   return det(t.qAppGrid, '<p>'+t.appGridP1+'</p><p>'+t.appGridP2+'</p>'+figA(IMG.appGrid, t.appGridCap), null, 'app');
+}
+/* back office : l'icône n'est pas poussée, l'utilisateur l'épingle lui-même */
+function pinBlock(t){
+  return '<ol>'+
+      '<li>'+t.pinS1+'</li>'+
+      '<li>'+t.pinS2+'</li>'+
+      '<li>'+t.pinS3+'</li>'+
+    '</ol>'+
+    figA(IMG.pinStart, t.pinCap)+
+    '<p class="small">'+t.pinNote+'</p>';
 }
 function faqZoom(t){
   var b = '<p>'+t.zoomP1+'</p><p>'+t.zoomP2+'</p><p>'+t.zoomP3+'</p>'+
@@ -1199,15 +1246,17 @@ function viewProfile(t){
 
 function viewInt(t){
   var u = U[lang].int;
-  var heroIcon = profile==="bo" ? IMG.iconBo : IMG.pwaIcon;
-  return bar(t)+'<div class="wrap"><h1 style="margin-top:24px">'+t.intH1+' <i class="sub">'+t.openSub+'</i></h1>'+
-    '<p class="portal">'+t.portal+'</p><p class="lead">'+t.intLead+'</p>'+
+  var bo = profile==="bo";
+  var heroIcon = bo ? IMG.iconBo : IMG.pwaIcon;
+  return bar(t)+'<div class="wrap"><h1 style="margin-top:24px">'+(bo?t.pinH1:t.intH1)+' <i class="sub">'+t.openSub+'</i></h1>'+
+    '<p class="portal">'+t.portal+'</p><p class="lead">'+(bo?t.pinLead:t.intLead)+'</p>'+
     '<div class="hero">'+
       (heroIcon?'<img src="'+heroIcon+'" alt="">':'')+
       '<div class="t"><b>'+t.intIconCaption+'</b></div>'+
     '</div>'+
-    figA(profile==="bo" ? IMG.taskbarBo : IMG.taskbar)+
-    '<div class="note ok"><p>'+(profile==="bo"?t.intOkBo:t.intOk)+'</p></div>'+
+    (bo ? pinBlock(t) : '')+
+    figA(bo ? IMG.taskbarBo : IMG.taskbar)+
+    '<div class="note ok"><p>'+(bo?t.intOkBo:t.intOk)+'</p></div>'+
     '<h2>'+t.intNoIcon+'</h2><p>'+t.intNoIconP+'</p>'+
     addrBlock(t,u)+
     '<a class="cta" href="'+u+'" target="_blank" rel="noopener">'+ico('cursor',22)+t.open+'</a>'+
@@ -1219,13 +1268,14 @@ function viewInt(t){
       '</div>' : '')+
     videoBlock()+
     '<h2>'+t.faq+'</h2>'+
-    faqFullscreen(t, t.fullscreenP2Int)+
+    faqFullscreen(t, bo ? t.fullscreenP2Bo : t.fullscreenP2Int)+
     faqZoom(t)+
+    (bo ? det(t.qPwa, procPwa(t), null, 'app') : '')+
     faqMulti(t)+
     faqAppGrid(t)+
-    det(t.qAutoUse,'<p>'+t.autoUse1+'</p><p>'+(profile==="bo"?t.autoUse2Bo:t.autoUse2)+'</p>'+fig(IMG.autologinLook)+
+    det(t.qAutoUse,'<p>'+t.autoUse1+'</p><p>'+t.autoUse2Bo+'</p>'+fig(IMG.autologinLook)+
       help(t),null,'key')+
-    (profile==="bo" ? det(t.qAutoInst, procAuto(t), null, 'key') : '')+
+    det(t.qAutoInst, procAuto(t), null, 'key')+
     det(t.qClipInt,'<p>'+t.clipInt+'</p>',null,'clip')+
     faqLogin(t)+
     faqCitrix(t)+
